@@ -2,13 +2,36 @@ package com.example.btcpro.dolphons;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.view.View;
 
 public class createGroup extends AppCompatActivity {
+
+    private Button createGroup;
+    private CheckBox privateGroup;
+    private ImageButton groupPicture;
+    private TextView groupName;
+    private TextView groupDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+
+        /*
+        nameText = (TextView)findViewById(R.id.name_text);
+        nameButton = (Button)findViewById(R.id.name_button);
+
+        nameButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                MainActivity.this.nameText.setText(R.string.name_text);
+            }
+        });
+        */
     }
 }
 
