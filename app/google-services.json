@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "650827752725",
+    "firebase_url": "https://dolphons-b45a8.firebaseio.com",
+    "project_id": "dolphons-b45a8",
+    "storage_bucket": "dolphons-b45a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650827752725:android:aed90a56851edf87",
+        "android_client_info": {
+          "package_name": "com.example.btcpro.dolphons"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650827752725-gvheft9l1rq82mkk3cfgmbv3b5p9r5gl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMGbOT5L2tNySQPw5DUAVWYvnKxVs_fdA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
