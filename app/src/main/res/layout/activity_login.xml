@@ -4,31 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/nathans_girl"
     tools:context="com.example.btcpro.dolphons.Login">
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/sign_in_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="showGreetings"
-        android:text="Sign In"
-        tools:layout_editor_absoluteX="104dp"
-        tools:layout_editor_absoluteY="156dp" />
 
-    <Button
-        android:id="@+id/sign_up_button"
+    <com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="showGreetings"
-        android:text="Sign Up"
-        tools:layout_editor_absoluteX="192dp"
-        tools:layout_editor_absoluteY="156dp" />
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:flexDirection="column"
+        app:flexWrap="wrap"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="60dp">
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:background="#00ACC1"
+            app:layout_flexBasisPercent="40%" />
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:background="#00BCD4"
+            app:layout_flexBasisPercent="10%">
 
 
-</LinearLayout>
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00BCD4"
+                android:text="Sign Up"
+                android:textColor="#0097A7" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00BCD4"
+                android:text="Login"
+                android:textColor="#0097A7" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:background="#26C6DA"
+            app:layout_flexBasisPercent="50%">
+
+
+        </LinearLayout>
+
+
+    </com.google.android.flexbox.FlexboxLayout>
 
 </android.support.constraint.ConstraintLayout>
