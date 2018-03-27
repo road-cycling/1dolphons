@@ -33,6 +33,9 @@ public class myGroups extends AppCompatActivity {
         arrayList.add("Data4");
         arrayList.add("Data5");
 
+
+        /* Probably want to make it a recycler view */
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
 
         myGroupsListView.setAdapter(arrayAdapter);

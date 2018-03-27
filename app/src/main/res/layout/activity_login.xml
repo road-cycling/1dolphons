@@ -65,12 +65,12 @@
 
 
             <EditText
-
+                android:background="@drawable/text_outline"
                 android:id="@+id/nameView"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#51D1E2"
+
                 android:inputType="textPersonName"
                 android:padding="10dp"
                 android:text="Name"
