@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "650827752725-g7r0kdg3hve0jp9nl1mm5jkc3kri0d0s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.btcpro.dolphons",
+            "certificate_hash": "1110cc922c94693d91d309ad2c918fa1b28332df"
+          }
+        },
+        {
           "client_id": "650827752725-gvheft9l1rq82mkk3cfgmbv3b5p9r5gl.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650827752725-gvheft9l1rq82mkk3cfgmbv3b5p9r5gl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
