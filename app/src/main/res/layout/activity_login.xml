@@ -86,7 +86,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:padding="10dp"
-                android:text="Email"
+                android:hint="Email"
                 android:textColor="@android:color/white" />
 
             <EditText
@@ -99,6 +99,7 @@
                 android:ems="10"
                 android:inputType="textPassword"
                 android:padding="10dp"
+                android:hint="Password"
                 android:textColor="@android:color/white"
                 android:visibility="visible" />
 
@@ -109,7 +110,7 @@
                 android:layout_marginTop="10dp"
                 android:background="#26C6DA"
                 android:onClick="loginSignup"
-                android:text="Button"
+                android:text="Log In"
                 android:textColor="@android:color/white" />
         </LinearLayout>
 
