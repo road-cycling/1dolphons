@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -39,6 +40,7 @@ public class Login extends AppCompatActivity {
     TextView nameView;
     TextView emailView;
     TextView passwordView;
+    TextView headerView;
     Button loginSignupButton;
 
 
@@ -51,6 +53,7 @@ public class Login extends AppCompatActivity {
         nameView = findViewById(R.id.nameView);
         emailView = findViewById(R.id.emailView);
         passwordView = findViewById(R.id.passwordView);
+        headerView = findViewById(R.id.header);
         loginSignupButton = findViewById(R.id.loginSignupButton);
 
     }
@@ -67,10 +70,11 @@ public class Login extends AppCompatActivity {
     /* one onclick function , manage with ID's  TO DO*/
     public void loginSignup(View v) {
         email = emailView.getText().toString();
-
         password = passwordView.getText().toString();
+        name = nameView.getText().toString();
+
         if (loginSignupButton.getText() == "Sign Up") {
-            createAccount(email, password);
+            createAccount(email, password, name);
         } else {
             signIn(email, password);
         }
@@ -80,6 +84,7 @@ public class Login extends AppCompatActivity {
         if (signIn) {
             nameView.setVisibility(View.VISIBLE);
             loginSignupButton.setText("Sign Up");
+            headerView.setText("Sign Up");
             signIn = !signIn;
         }
     }
@@ -89,6 +94,7 @@ public class Login extends AppCompatActivity {
         if (!signIn) {
             nameView.setVisibility(View.GONE);
             loginSignupButton.setText("Login");
+            headerView.setText("Login");
             signIn = !signIn;
         }
     }
@@ -96,7 +102,8 @@ public class Login extends AppCompatActivity {
 
     /* Thanks Google */
 
-    private void createAccount(String email, String password) {
+    private void createAccount(String email, String password, String name) {
+        final String userName = name;
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -105,6 +112,21 @@ public class Login extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
+
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(userName)
+                                .build();
+
+                        user.updateProfile(profileUpdates)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d(TAG, "user profile updated.");
+                                        }
+                                    }
+                                });
+
                         updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
@@ -147,8 +169,12 @@ public class Login extends AppCompatActivity {
     public void updateUI(FirebaseUser user) {
         if (user != null) {
             System.out.println("Successful");
+            headerView.setText("Login Successful");
+            System.out.println(user.getDisplayName());
+            startActivity(new Intent(Login.this, welcome.class));
         } else {
             System.out.println("Unsuccessful");
+            headerView.setText("Email or Password incorrect, please try again");
         }
 
     }
