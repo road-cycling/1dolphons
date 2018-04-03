@@ -3,7 +3,7 @@
 William: Log in / sign up, View Group, Create Event
 Sergio: createGroup
 Tyler: createGroup
-Trenton: Group Messaging 
+Trenton: Edit user profile info
 Nathon:
 
 Finished:
@@ -14,3 +14,5 @@ Ty Ty:
 Nate:
 
 To-Do: 
+Group Messaging
+Connect all screens when buttons are pressed
