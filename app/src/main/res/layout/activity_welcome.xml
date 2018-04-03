@@ -17,18 +17,31 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:background="#0097A7"
-            android:gravity="right">
+            >
+
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:background="#800097A7"
+                android:onClick="logout"
+                android:text="Log Out"
+                android:textColor="#000000"
+                android:textSize="17sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:padding="5dp"
-
-
+                android:layout_alignParentEnd="true"
+                android:textAlignment="viewEnd"
                 android:text="My Groups"
                 android:textColor="#000000"
                 android:textSize="20sp" />
+
+
+
         </RelativeLayout>
 
         <TextView
