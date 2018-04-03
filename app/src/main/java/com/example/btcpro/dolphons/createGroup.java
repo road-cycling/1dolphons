@@ -79,9 +79,14 @@ public class createGroup extends AppCompatActivity
                        Toast.makeText(createGroup.this, "Error: " + error, Toast.LENGTH_SHORT).show();
                     }
                 });
+                openNextActivity();
 
             }
         });
+    }
+    private void openNextActivity(){
+        Intent intent = new Intent(this, welcome.class);
+        startActivity(intent);
     }
 }
 
