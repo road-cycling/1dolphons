@@ -1,9 +1,9 @@
 # 1dolphons
 
-William: Log in / sign up
+William: Log in / sign up, View Group, Create Event
 Sergio: createGroup
 Tyler: createGroup
-Trenton:
+Trenton: Group Messaging 
 Nathon:
 
 Finished:
@@ -13,4 +13,4 @@ ricet:
 Ty Ty:
 Nate:
 
-To-Do:
+To-Do: 
