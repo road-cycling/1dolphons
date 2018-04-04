@@ -44,38 +44,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher" />
 
-    <EditText
-        android:id="@+id/groupNameTextEnter"
+    <TextView
+        android:id="@+id/textviewGroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:hint="Enter Group Name"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textStyle="italic"
+        android:layout_marginEnd="84dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="16dp"
+        android:text="Group Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagebuttonGroupPicture" />
 
-    <EditText
-        android:id="@+id/enterGroupDesc"
-        android:layout_width="323dp"
-        android:layout_height="145dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+    <TextView
+        android:id="@+id/textviewGroupDescription"
+        android:layout_width="349dp"
+        android:layout_height="135dp"
+        android:layout_marginBottom="19dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="6dp"
         android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:hint="Enter Group Description"
-        android:textAlignment="center"
-        android:textStyle="italic"
+        android:text="Group Description"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        app:layout_constraintBottom_toTopOf="@+id/checkboxPrivate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/groupNameTextEnter" />
+        app:layout_constraintTop_toBottomOf="@+id/textviewGroupName" />
 
 </android.support.constraint.ConstraintLayout>

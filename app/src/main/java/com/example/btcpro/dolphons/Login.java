@@ -1,7 +1,6 @@
 package com.example.btcpro.dolphons;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -128,16 +127,17 @@ public class Login extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             Log.d(TAG, "user profile updated.");
-                                            updateUI(true);
                                         }
                                     }
                                 });
+
+                        updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(Login.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
-                        updateUI(false);
+                        updateUI(null);
                     }
 
                     // ...
@@ -156,13 +156,13 @@ public class Login extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(true);
+                        updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                         Toast.makeText(Login.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
-                        updateUI(false);
+                        updateUI(null);
                     }
 
                     // ...
@@ -170,14 +170,15 @@ public class Login extends AppCompatActivity {
             });
     }
 
-    public void updateUI(boolean successful) {
-        if (successful) {
+    public void updateUI(FirebaseUser user) {
+        if (user != null) {
             System.out.println("Successful");
-            loginSignupButton.setEnabled(false);
+            headerView.setText("Login Successful");
+            System.out.println(user.getDisplayName());
             startActivity(new Intent(Login.this, welcome.class));
         } else {
-            headerView.setTextColor(Color.parseColor("#FFFFFF"));
             System.out.println("Unsuccessful");
+            headerView.setText("Email or Password incorrect, please try again");
         }
 
     }

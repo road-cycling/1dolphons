@@ -74,7 +74,7 @@
 
 
             <EditText
-                android:background="#51D1E2"
+                android:background="@drawable/text_outline"
                 android:id="@+id/nameView"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
 
                 android:inputType="textPersonName"
                 android:padding="10dp"
-                android:hint="Name"
+                android:text="Name"
                 android:textColor="@android:color/white"
                 android:visibility="gone" />
 

@@ -1,91 +1,19 @@
 package com.example.btcpro.dolphons;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
-public class createGroup extends AppCompatActivity
-{
-    private Button createGroup;
-    private CheckBox privateGroup;
-    //private ImageButton groupPicture;
-    private EditText groupName;
-    private EditText groupDesc;
-
-    private FirebaseFirestore FireStore;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_group);
-
-        FireStore = FirebaseFirestore.getInstance();
-
-        groupName = (EditText) findViewById(R.id.groupNameTextEnter);
-        groupDesc = (EditText) findViewById(R.id.enterGroupDesc);
-        privateGroup = (CheckBox) findViewById(R.id.checkboxPrivate);
-        createGroup = (Button) findViewById(R.id.buttonCreateGroup);
-
-        createGroup.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                //What to do after create button is pressed
-                String name = groupName.getText().toString();
-                String desc = groupDesc.getText().toString();
-                //
-                boolean privateCheck = privateGroup.isChecked();
-
-                Map<String, String> userMap = new HashMap<>();
-
-                userMap.put("groupName", name);
-                userMap.put("groupDescp", desc);
-
-                FireStore.collection("Groups").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference)
-                    {
-                        Toast.makeText(createGroup.this, "Succesful Group Creation", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e)
-                    {
-                       String error = e.getMessage();
-
-                       Toast.makeText(createGroup.this, "Error: " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        });
-    }
-}
-
-/*public class createGroup extends AppCompatActivity {
+public class createGroup extends AppCompatActivity {
 
     private Button createGroup;
     private CheckBox privateGroup;
@@ -116,7 +44,7 @@ public class createGroup extends AppCompatActivity
                     Log.d(TAG, "onAuthStateChanged:signed_in" + user.getUid());
                     toastMessage
                 }
-        }
+        }*/
 
         createGroup = (Button)findViewById(R.id.buttonCreateGroup);
         createGroup.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +55,7 @@ public class createGroup extends AppCompatActivity
                 DatabaseReference myRef = database.getReference("groupName");
                 myRef.setValue(groupName);
                 DatabaseReference myRef2 = database.getReference("groupDescription");
-                myRef2.setValue(groupDescription);
+                myRef2.setValue(groupDescription);*/
 
                 //Go to next window.
                 openNextActivity();
@@ -142,9 +70,7 @@ public class createGroup extends AppCompatActivity
         startActivity(intent);
     }
 
-
-
-         //Read from the database
+        /*// Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -159,9 +85,7 @@ public class createGroup extends AppCompatActivity
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
-
-
+        });*/
 
     //configureNextButton();
 
@@ -186,7 +110,7 @@ public class createGroup extends AppCompatActivity
             }
         });
     }*/
-//}
+}
 
 
 /*
