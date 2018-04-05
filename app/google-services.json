@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "650827752725-vg4t6f4o1i8qrqf7f1rrgedluviqikdn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.btcpro.dolphons",
+            "certificate_hash": "bda2f9aaed7a68afbb3ff4e6e0f0f6637e984203"
+          }
+        },
+        {
           "client_id": "650827752725-g7r0kdg3hve0jp9nl1mm5jkc3kri0d0s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
