@@ -66,18 +66,19 @@
             android:layout_marginTop="5dp">
 
             <Button
-                android:id="@+id/testbutton"
+                android:id="@+id/createGroup"
                 android:layout_width="0dp"
                 android:layout_height="75dp"
                 android:layout_marginRight="1dp"
                 android:layout_weight="1"
                 android:background="#0097A7"
                 android:shadowColor="#0097A7"
+                android:onClick="createGroup"
                 android:text="Create Group"
                 android:textColor="@android:color/white" />
 
             <Button
-                android:id="@+id/cancelButton"
+                android:id="@+id/joinGroup"
                 android:layout_width="0dp"
                 android:layout_height="75dp"
                 android:layout_marginLeft="1dp"
