@@ -32,6 +32,8 @@ public class createGroup extends AppCompatActivity
     //private ImageButton groupPicture;
     private EditText groupName;
     private EditText groupDesc;
+    private FirebaseUser user;
+
 
     private FirebaseFirestore FireStore;
 
@@ -42,7 +44,7 @@ public class createGroup extends AppCompatActivity
         setContentView(R.layout.activity_create_group);
 
         FireStore = FirebaseFirestore.getInstance();
-
+        user = FirebaseAuth.getInstance().getCurrentUser();
         groupName = (EditText) findViewById(R.id.groupNameTextEnter);
         groupDesc = (EditText) findViewById(R.id.enterGroupDesc);
         privateGroup = (CheckBox) findViewById(R.id.checkboxPrivate);
@@ -59,27 +61,7 @@ public class createGroup extends AppCompatActivity
                 //
                 boolean privateCheck = privateGroup.isChecked();
 
-                Map<String, String> userMap = new HashMap<>();
-
-                userMap.put("groupName", name);
-                userMap.put("groupDescp", desc);
-
-                FireStore.collection("Groups").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference)
-                    {
-                        Toast.makeText(createGroup.this, "Succesful Group Creation", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e)
-                    {
-                       String error = e.getMessage();
-
-                       Toast.makeText(createGroup.this, "Error: " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                openNextActivity();
+                addGroupToFireStore(name, desc, privateCheck);
 
             }
         });
@@ -87,6 +69,86 @@ public class createGroup extends AppCompatActivity
     private void openNextActivity(){
         Intent intent = new Intent(this, welcome.class);
         startActivity(intent);
+    }
+
+    private void addGroupToFireStore(final String name, String desc, boolean privateCheck) {
+        Map<String, String> userMap = new HashMap<>();
+        System.out.println("BEFORE!!!");
+        System.out.println(user.getUid());
+        System.out.println(FireStore);
+        userMap.put("groupName", name);
+        userMap.put("groupDesc", desc);
+        userMap.put("owner_uid", user.getUid());
+
+         FireStore.collection("groupss").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                System.out.println("before ID");
+                System.out.println(documentReference.getId());
+                addUserReference(documentReference.getId(), name);
+                //Toast.makeText(createGroup.this, "Succesful Group Creation", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e)
+            {
+                String error = e.getMessage();
+
+                Toast.makeText(createGroup.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+        //openNextActivity();
+    }
+
+    private void addUserReference(final String refID, String groupName) {
+
+        Map<String, String> userMap = new HashMap<>();
+        userMap.put("groupID", refID);
+        userMap.put("groupName", groupName);
+
+        FireStore
+                .collection("users")
+                .document(user.getUid())
+                .collection("groupsApartOf")
+                .add(userMap)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        addGroupUserReference(documentReference.getId(), refID);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //failll
+            }
+        });
+    }
+
+    private void addGroupUserReference(String userRefID, String groupRefID) {
+        Map<String, String> userMap = new HashMap<>();
+        userMap.put("userID", user.getUid());
+        userMap.put("deleteID", userRefID);
+        userMap.put("owner", /*boolean :( */ "true"); //I think we need this
+        userMap.put("admin", /*boolean :( */ "true");
+        //we need to add name of user
+
+        FireStore
+                .collection("groupss")
+                .document(groupRefID)
+                .collection("users")
+                .add(userMap)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        //it works!
+                        openNextActivity();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                /* shake? */
+            }
+        });
     }
 }
 
