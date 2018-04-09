@@ -74,15 +74,15 @@
 
 
             <EditText
-                android:background="@drawable/text_outline"
                 android:id="@+id/nameView"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:background="@drawable/text_outline"
 
+                android:hint="Name"
                 android:inputType="textPersonName"
                 android:padding="10dp"
-                android:text="Name"
                 android:textColor="@android:color/white"
                 android:visibility="gone" />
 
@@ -91,9 +91,10 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#51D1E2"
+                android:background="@drawable/text_outline"
                 android:ems="10"
                 android:inputType="textPersonName"
+
                 android:padding="10dp"
                 android:hint="Email"
                 android:textColor="@android:color/white" />
@@ -104,7 +105,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginBottom="10dp"
-                android:background="#51D1E2"
+                android:background="@drawable/text_outline"
                 android:ems="10"
                 android:inputType="textPassword"
                 android:padding="10dp"
