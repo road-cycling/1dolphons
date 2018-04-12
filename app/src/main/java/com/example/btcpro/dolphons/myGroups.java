@@ -1,13 +1,9 @@
 package com.example.btcpro.dolphons;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -15,21 +11,17 @@ import android.widget.ListView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class myGroups extends AppCompatActivity {
 
+    ArrayList<String> groupID;
     ListView myGroupsListView;
     private FirebaseFirestore FireStore;
     private FirebaseUser user;
@@ -45,13 +37,7 @@ public class myGroups extends AppCompatActivity {
         myGroupsListView = findViewById(R.id.myGroupsListView);
 
         final ArrayList<String> arrayList = new ArrayList<String>();
-        arrayList.add("Data");
-        arrayList.add("Data1");
-        arrayList.add("Data2");
-        arrayList.add("Data3");
-        arrayList.add("Data4");
-        arrayList.add("Data5");
-
+        groupID = new ArrayList<String>();
 
         FireStore
                 .collection("users")
@@ -63,28 +49,14 @@ public class myGroups extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         List<DocumentSnapshot> data = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot item : data) {
-                            System.out.println("This item is");
-                            if (item.getData().get("groupName") != null) {
-                                arrayList.add(item.getData().get("groupName").toString());
-                                //might be error in data stored. This shouldnt be needed
-                            }
-                            //saveData(item.getData());
-                            //Map<String, String> data =
-                            System.out.println(item.getData().get("groupName"));
-                            System.out.println(item.getData().keySet());
-                            //item.getData
-                            //JSONObject parse = new JSONObject(item.getData());
-                            //System.out.println(parse.getString("groupName"));
+                            arrayList.add(item.get("groupName").toString());
+                            groupID.add(item.get("groupID").toString());
                         }
-
                         attach(arrayList);
+                        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                     }
                 });
 
-
-        for (String item: arrayList) {
-            System.out.println(item);
-        }
 
 
     }
@@ -96,10 +68,11 @@ public class myGroups extends AppCompatActivity {
         myGroupsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Log.i("Tapped: ", arrayList.get(i));
+                Log.i("Tapped: ", arrayList.toString());
+                Log.i("ID is: ", groupID.get(i)); //working perfectly for intents
+                Log.i("Tapped (?): ", Integer.toString(i));
             }
         });
     }
-
 
 }
