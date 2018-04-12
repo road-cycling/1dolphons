@@ -37,6 +37,7 @@ public class welcome extends AppCompatActivity {
     private Button signOut;
     private ImageView profilePicture;
     private TextView userName;
+    private TextView userEmail;
 
     private FirebaseFirestore FireStore;
     private FirebaseUser user;
@@ -54,6 +55,7 @@ public class welcome extends AppCompatActivity {
         signOut = findViewById(R.id.buttonSignOut);
         profilePicture = findViewById(R.id.imgviewProfilePicture);
         userName = findViewById(R.id.textviewName);
+        userEmail = findViewById(R.id.textviewEmail);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         FireStore = FirebaseFirestore.getInstance();
@@ -63,6 +65,10 @@ public class welcome extends AppCompatActivity {
                 String name = user.getDisplayName();
                 String message = "Hello, " + name;
                 userName.setText(message);
+            }
+            if(user.getEmail() != null){
+                String email = user.getEmail();
+                userEmail.setText(email);
             }
             if(user.getPhotoUrl() != null){
                 Uri photoUrl = user.getPhotoUrl();
