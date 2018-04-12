@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,9 +15,13 @@ import com.google.firebase.auth.FirebaseUser;
 public class welcome extends AppCompatActivity {
 
     TextView textView;
+    ImageView imageView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
@@ -30,6 +35,10 @@ public class welcome extends AppCompatActivity {
             String message = "Hello " + name;
             textView.setText(message);
         }
+    }
+
+    public void createGroup(View v) {
+        startActivity(new Intent(welcome.this, createGroup.class));
     }
 
     public void logout(View v) {

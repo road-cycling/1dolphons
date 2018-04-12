@@ -26,11 +26,14 @@
         </activity>
         <activity android:name=".welcome" />
         <activity android:name=".joinGroup" />
+        <activity android:name=".createGroup" />
+        <activity android:name=".viewGroup" />
 
         <activity
             android:name=".myGroups"
             android:label="@string/title_activity_my_groups"
             android:theme="@style/AppTheme.NoActionBar"/>
+
 
     </application>
 
