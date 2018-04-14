@@ -32,7 +32,9 @@
             android:label="@string/title_activity_my_groups"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".editUserName" />
-        <activity android:name=".changeUserPassword"></activity>
+        <activity android:name=".changeUserPassword" />
+        <activity android:name=".adminPanel" />
+        <activity android:name=".admin_createEvent"></activity>
     </application>
 
 </manifest>
