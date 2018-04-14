@@ -3,14 +3,14 @@
 William: Log in / sign up, View Group, Create Event
 Sergio: createGroup
 Tyler: createGroup
-Trenton: welcome, Edit user profile info
+Trenton: joinGroup
 Nathon:
 
 Finished:
 Will:
 Serg:
 ricet:
-Ty Ty:
+Trenton: welcome, editUserProfile, editUserName, changeUserPassword
 Nate:
 
 To-Do: 
