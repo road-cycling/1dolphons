@@ -1,8 +1,8 @@
 # 1dolphons
 
 William: Log in / sign up, View Group, Create Event
-Sergio: createGroup
-Tyler: createGroup
+Sergio: createGroup, Group Messaging
+Tyler: createGroup, Group Messaging
 Trenton: joinGroup
 Nathon:
 
@@ -14,8 +14,7 @@ Trenton: welcome, editUserProfile, editUserName, changeUserPassword
 Nate:
 
 To-Do: 
-Group Messaging
-*Connect all screens when buttons are pressed (Welcome Page should do this- make sure all other pages that need it have it)
+-*Connect all screens when buttons are pressed (Welcome Page should do this- make sure all other pages that need it have it)
 
 
 Because we used noSQL some things are harder to do. The point of noSQL is to
