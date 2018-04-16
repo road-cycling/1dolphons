@@ -1,8 +1,8 @@
 # 1dolphons
 
 William: Log in / sign up, View Group, Create Event
-Sergio: createGroup, Group Messaging
-Tyler: createGroup, Group Messaging
+Sergio: createGroup, Messaging
+Tyler: createGroup, Messaging
 Trenton: joinGroup
 Nathon:
 
