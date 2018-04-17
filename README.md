@@ -1,22 +1,19 @@
 # 1dolphons
 
 William: Log in / sign up, View Group, Create Event
-
 Sergio: createGroup, Messaging
 Tyler: createGroup, Messaging
 Trenton: joinGroup
-
 Nathon:
 
 Finished:
 Will:
 Serg:
 ricet:
-Ty Ty:
+Trenton: welcome, editUserProfile, editUserName, changeUserPassword
 Nate:
 
 To-Do: 
-
 -*Connect all screens when buttons are pressed (Welcome Page should do this- make sure all other pages that need it have it)
 
 
@@ -43,4 +40,3 @@ Product Backlog:
   
   video for chat msg
   https://www.youtube.com/watch?v=Xn0tQHpMDnM
-
