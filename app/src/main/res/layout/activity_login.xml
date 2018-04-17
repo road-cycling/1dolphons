@@ -18,11 +18,19 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="60dp">
 
+
         <LinearLayout
-            android:layout_width="100dp"
-            android:layout_height="80dp"
+            android:id="@+id/header"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
             android:background="#00ACC1"
-            app:layout_flexBasisPercent="40%" />
+            android:text=""
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            app:layout_flexBasisPercent="30%"
+            />
+
 
         <LinearLayout
             android:layout_width="100dp"
@@ -58,22 +66,22 @@
             android:layout_width="100dp"
             android:layout_height="80dp"
             android:background="#26C6DA"
-            app:layout_flexBasisPercent="50%"
+            app:layout_flexBasisPercent="60%"
             android:gravity="center"
 
             >
 
 
             <EditText
-                android:background="@drawable/text_outline"
                 android:id="@+id/nameView"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:background="@drawable/text_outline"
 
+                android:hint="Name"
                 android:inputType="textPersonName"
                 android:padding="10dp"
-                android:text="Name"
                 android:textColor="@android:color/white"
                 android:visibility="gone" />
 
@@ -82,9 +90,10 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="#51D1E2"
+                android:background="@drawable/text_outline"
                 android:ems="10"
                 android:inputType="textPersonName"
+
                 android:padding="10dp"
                 android:hint="Email"
                 android:textColor="@android:color/white" />
@@ -95,13 +104,27 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginBottom="10dp"
-                android:background="#51D1E2"
+                android:background="@drawable/text_outline"
                 android:ems="10"
                 android:inputType="textPassword"
                 android:padding="10dp"
                 android:hint="Password"
                 android:textColor="@android:color/white"
                 android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/passwordView2"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/text_outline"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:hint="Confirm"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/loginSignupButton"
