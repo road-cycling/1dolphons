@@ -37,3 +37,6 @@ Product Backlog:
   - make a page to view a group (see old design, this will show name/ organizer/ summary / past events and upcoming events  )
     (when above is done we can add 1. admin tools, 2. ability for admin to delete users. 3. ability to join / leave group etc so this is important(will open doors for alot of new items to do))
   - join group page, where you are able to search for grousp, this would make a firebase query, and display the results on a (recycler view~~ or array adapter like prev)
+  
+  video for chat msg
+  https://www.youtube.com/watch?v=Xn0tQHpMDnM
