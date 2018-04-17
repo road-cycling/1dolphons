@@ -8,6 +8,4 @@
     tools:context="com.example.btcpro.dolphons.myGroups"
     tools:showIn="@layout/activity_my_groups">
 
-
-
 </android.support.constraint.ConstraintLayout>
