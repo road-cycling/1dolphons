@@ -1,4 +1,4 @@
-package com.example.btcpro.dolphons;
+/*package com.example.btcpro.dolphons;
 
 import android.app.DatePickerDialog;
 import android.support.v4.app.DialogFragment;
@@ -64,4 +64,4 @@ public class admin_createEvent extends AppCompatActivity {
     }
 }
 
-// i have no clue if this works.
+// i have no clue if this works.*/
