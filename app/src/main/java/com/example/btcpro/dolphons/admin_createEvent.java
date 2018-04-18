@@ -1,4 +1,4 @@
-/*package com.example.btcpro.dolphons;
+package com.example.btcpro.dolphons;
 
 import android.app.DatePickerDialog;
 import android.support.v4.app.DialogFragment;
@@ -43,7 +43,7 @@ public class admin_createEvent extends AppCompatActivity {
 
         };
 
-        edittext.setOnClickListener(new View.OnClickListener() {
+        /*edittext.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -52,7 +52,7 @@ public class admin_createEvent extends AppCompatActivity {
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
-        });
+        });*/
 
     }
 
@@ -64,4 +64,4 @@ public class admin_createEvent extends AppCompatActivity {
     }
 }
 
-// i have no clue if this works.*/
+// i have no clue if this works. 
