@@ -19,7 +19,7 @@
         tools:layout_editor_absoluteY="60dp">
 
 
-        <TextView
+        <LinearLayout
             android:id="@+id/header"
             android:layout_height="50dp"
             android:layout_width="match_parent"
@@ -27,9 +27,8 @@
             android:text=""
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textSize="@dimen/activity_horizontal_margin"
             android:textColor="@android:color/white"
-            app:layout_flexBasisPercent="40%"
+            app:layout_flexBasisPercent="30%"
             />
 
 
@@ -67,7 +66,7 @@
             android:layout_width="100dp"
             android:layout_height="80dp"
             android:background="#26C6DA"
-            app:layout_flexBasisPercent="50%"
+            app:layout_flexBasisPercent="60%"
             android:gravity="center"
 
             >
@@ -112,6 +111,20 @@
                 android:hint="Password"
                 android:textColor="@android:color/white"
                 android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/passwordView2"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/text_outline"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:hint="Confirm"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/loginSignupButton"
