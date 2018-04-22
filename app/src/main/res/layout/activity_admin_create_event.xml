@@ -4,42 +4,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.btcpro.dolphons.admin_createEvent">
+    tools:context="com.example.btcpro.dolphons.Login">
 
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="168dp"
-        android:layout_height="47dp"
-        android:text="Create Event"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="38dp" />
+    <com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:flexDirection="column"
+        app:flexWrap="wrap"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="60dp">
 
-    <EditText
-        android:id="@+id/editText6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Location"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="98dp" />
 
-    <EditText
-        android:id="@+id/editText7"
-        android:layout_width="302dp"
-        android:layout_height="145dp"
-        android:ems="10"
-        android:hint="Summary"
-        android:inputType="textMultiLine"
-        tools:layout_editor_absoluteX="41dp"
-        tools:layout_editor_absoluteY="158dp" />
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:background="#00ACC1"
+            android:text=""
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            app:layout_flexBasisPercent="15%"
+            android:gravity="center"
 
-    <EditText
-        android:id="@+id/Birthday"
-        android:clickable="true"
-        android:editable="false"
-        android:hint="date"/>
+
+            >
+
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:lineSpacingExtra="8sp"
+                android:text="Create Event"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="26sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:background="#00BCD4"
+            android:gravity="center"
+
+            app:layout_flexBasisPercent="10%">
+
+
+            <EditText
+                android:id="@+id/location"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#51D1E2"
+                android:inputType="textPersonName"
+                android:padding="5dp"
+                android:text="Location" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:background="#00BCD4"
+            android:gravity="center"
+
+            app:layout_flexBasisPercent="35%">
+
+
+            <EditText
+                android:id="@+id/Summary"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#51D1E2"
+                android:gravity="top|left"
+                android:inputType="textMultiLine"
+                android:lines="8"
+                android:minLines="6"
+                android:padding="5dp"
+                android:text="Summary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:background="#00BCD4"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="5dp"
+
+            app:layout_flexBasisPercent="30%"
+            tools:layout_editor_absoluteY="128dp">
+
+
+            <DatePicker
+                android:id="@+id/datePicker"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:background="#26C6DA"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="5dp"
+
+            app:layout_flexBasisPercent="10%"
+            tools:layout_editor_absoluteY="128dp">
+
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="#00838F"
+                android:onClick="createEvent"
+                android:text="Create" />
+        </LinearLayout>
+
+    </com.google.android.flexbox.FlexboxLayout>
 
 </android.support.constraint.ConstraintLayout>

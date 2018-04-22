@@ -1,6 +1,7 @@
 package com.example.btcpro.dolphons;
 
 import android.app.DatePickerDialog;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,15 +9,24 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class admin_createEvent extends AppCompatActivity {
 
-    EditText edittext;
-    Calendar myCalendar = Calendar.getInstance();
+    private FirebaseFirestore FireStore;
+    EditText Location;
+    EditText Summary;
     String groupID;
+    DatePicker date;
 
 
     @Override
@@ -24,43 +34,49 @@ public class admin_createEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_create_event);
 
-        myCalendar = Calendar.getInstance();
-        groupID = getIntent().getExtras().getString("groupID");
-
-
-        edittext= (EditText) findViewById(R.id.Birthday);
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
-
-        };
-
-        /*edittext.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(admin_createEvent.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });*/
+        groupID   = getIntent().getExtras().getString("groupID");
+        FireStore = FirebaseFirestore.getInstance();
+        Summary   = findViewById(R.id.Summary);
+        Location  = findViewById(R.id.location);
+        date      = findViewById(R.id.datePicker);
 
     }
 
-    public void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+    public void createEvent(View v) {
+        //we create event here
+        String summary = Summary.getText().toString();
+        String location = Location.getText().toString();
 
-        edittext.setText(sdf.format(myCalendar.getTime()));
+        int day = date.getDayOfMonth();
+        int month = date.getMonth() + 1;
+        int year = date.getYear();
+
+        Map<String, String> userMap = new HashMap<>();
+
+        userMap.put("location", location);
+        userMap.put("summary", summary);
+        userMap.put("date", Integer.toString(day) /* needs to be changed */);
+    }
+
+    private void addUserReference(final Map userMap) {
+
+
+        FireStore
+                .collection("groupss") /* referencing better data */
+                .document(groupID) /*correct*/
+                .collection("events")
+                .add(userMap)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        /* success*/
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //failll
+            }
+        });
     }
 }
 
