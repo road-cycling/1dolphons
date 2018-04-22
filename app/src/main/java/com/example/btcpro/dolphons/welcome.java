@@ -28,11 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class welcome extends AppCompatActivity {
 
-    private Button createGroup;
-    private Button myGroups;
-    private Button joinGroup;
-    private Button editProfile;
-    private Button signOut;
+
     private ImageView profilePicture;
     private TextView userName;
     private TextView userEmail;
@@ -46,14 +42,8 @@ public class welcome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        createGroup = findViewById(R.id.buttonCreateGroup);
-        myGroups = findViewById(R.id.buttonMyGroups);
-        joinGroup = findViewById(R.id.buttonJoinGroup);
-        editProfile = findViewById(R.id.buttonEditProfile);
-        signOut = findViewById(R.id.buttonSignOut);
         profilePicture = findViewById(R.id.imgviewProfilePicture);
         userName = findViewById(R.id.textviewName);
-        userEmail = findViewById(R.id.textviewEmail);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         FireStore = FirebaseFirestore.getInstance();
@@ -64,74 +54,43 @@ public class welcome extends AppCompatActivity {
                 String message = "Hello, " + name;
                 userName.setText(message);
             }
-            if(user.getEmail() != null){
-                String email = user.getEmail();
-                userEmail.setText(email);
-            }
-            if(user.getPhotoUrl() != null){
-                Uri photoUrl = user.getPhotoUrl();
-                profilePicture.setImageURI(photoUrl);
-            }
+            /* works but takes too long to load (huge file) */
+           // if(user.getPhotoUrl() != null){
+           //     Uri photoUrl = user.getPhotoUrl();
+           //     profilePicture.setImageURI(photoUrl);
+           //     System.out.println(photoUrl + "url");
+           // } else {
+           //     System.out.println("IT IS NULL");
+           // }
         }
         else{
             //User is not signed in, return to Login screen.
             openLogin();
         }
 
-        createGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openCreateGroup();
-            }
-        });
-        myGroups.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openMyGroups();
-            }
-        });
-        joinGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openJoinGroup();
-            }
-        });
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openEditProfile();
-            }
-        });
-
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signUserOut();
-            }
-        });
     }
-    private void openCreateGroup(){
+    public void openCreateGroup(View v){
         Intent intent = new Intent(this, createGroup.class);
         startActivity(intent);
     }
-    private void openMyGroups(){
+    public void openMyGroups(View v){
         Intent intent = new Intent(this, myGroups.class);
         startActivity(intent);
     }
-    private void openJoinGroup(){
+    public void openJoinGroup(View v){
         Intent intent = new Intent(this, joinGroup.class);
         startActivity(intent);
     }
-    private void openEditProfile(){
+    public void openEditProfile(View v){
         Intent intent = new Intent(this, editUserProfile.class);
         startActivity(intent);
     }
-    private void openLogin(){
+    public void openLogin(){
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
         finish();
     }
-    private void signUserOut(){
+    public void signUserOut(View v){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_alert).setTitle("Sign out?").setMessage("This will return you to the login screen.").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
