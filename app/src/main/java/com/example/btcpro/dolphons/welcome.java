@@ -100,6 +100,12 @@ public class welcome extends AppCompatActivity {
             }
         }).setNegativeButton("No", null).show();
     }
+
+    public void openAdminPanel(View v) {
+        Intent intent = new Intent(this, adminPanel.class);
+        intent.putExtra("groupID", "mNYJcsJcxWefOEJwdfTP"); //dummy but real data
+        startActivity(intent);
+    }
 }
 
 

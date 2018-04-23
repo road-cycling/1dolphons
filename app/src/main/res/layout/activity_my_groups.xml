@@ -19,14 +19,7 @@
             android:background="#0097A7"
             android:gravity="left">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:padding="5dp"
-                android:text="Back"
-                android:textColor="#000000"
-                android:textSize="20sp" />
+
         </RelativeLayout>
 
         <RelativeLayout

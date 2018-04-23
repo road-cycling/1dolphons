@@ -1,8 +1,9 @@
 package com.example.btcpro.dolphons;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,11 +27,16 @@ public class admin_createEvent extends AppCompatActivity {
     EditText Location;
     EditText Summary;
     String groupID;
-    DatePicker date;
+    Calendar myCalendar;
+    EditText edittext;
+
+    int Calday, Calmonth, Calyear;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_create_event);
 
@@ -38,7 +44,31 @@ public class admin_createEvent extends AppCompatActivity {
         FireStore = FirebaseFirestore.getInstance();
         Summary   = findViewById(R.id.Summary);
         Location  = findViewById(R.id.location);
-        date      = findViewById(R.id.datePicker);
+
+        myCalendar = Calendar.getInstance();
+
+        EditText edittext= findViewById(R.id.Birthday);
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calday = dayOfMonth;
+                Calmonth = monthOfYear + 1;
+                Calyear = year;
+            }
+
+        };
+
+        edittext.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(admin_createEvent.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
     }
 
@@ -47,15 +77,15 @@ public class admin_createEvent extends AppCompatActivity {
         String summary = Summary.getText().toString();
         String location = Location.getText().toString();
 
-        int day = date.getDayOfMonth();
-        int month = date.getMonth() + 1;
-        int year = date.getYear();
+        String date = Integer.toString(Calmonth) + "/" + Integer.toString(Calday) + "/" + Integer.toString(Calyear);
 
         Map<String, String> userMap = new HashMap<>();
 
         userMap.put("location", location);
         userMap.put("summary", summary);
-        userMap.put("date", Integer.toString(day) /* needs to be changed */);
+        userMap.put("date", date);
+
+        addUserReference(userMap);
     }
 
     private void addUserReference(final Map userMap) {
@@ -69,7 +99,7 @@ public class admin_createEvent extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        /* success*/
+                        navigate();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -77,7 +107,23 @@ public class admin_createEvent extends AppCompatActivity {
                 //failll
             }
         });
+
+
     }
+
+    private void updateLabel() {
+        String myFormat = "EEE, MMM d, ''yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        System.out.println("called");
+        edittext.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    public void navigate() {
+        Intent intent = new Intent(this, welcome.class);
+        startActivity(intent);
+    }
+
+
 }
 
 // i have no clue if this works. 

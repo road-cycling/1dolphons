@@ -73,7 +73,6 @@ public class createGroup extends AppCompatActivity
 
     private void addGroupToFireStore(final String name, String desc, boolean privateCheck) {
         Map<String, String> userMap = new HashMap<>();
-        System.out.println("BEFORE!!!");
         System.out.println(user.getUid());
         System.out.println(FireStore);
         userMap.put("groupName", name);
