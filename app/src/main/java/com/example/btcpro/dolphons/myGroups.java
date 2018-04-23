@@ -1,5 +1,6 @@
 package com.example.btcpro.dolphons;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -68,9 +69,13 @@ public class myGroups extends AppCompatActivity {
         myGroupsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.i("Tapped: ", arrayList.toString());
+                Intent intent = new Intent().setClass(myGroups.this, viewGroup.class);
+                intent.putExtra("groupID", groupID.get(i));
+
+                startActivity(intent);
+                /*Log.i("Tapped: ", arrayList.toString());
                 Log.i("ID is: ", groupID.get(i)); //working perfectly for intents
-                Log.i("Tapped (?): ", Integer.toString(i));
+                Log.i("Tapped (?): ", Integer.toString(i));*/
             }
         });
     }
