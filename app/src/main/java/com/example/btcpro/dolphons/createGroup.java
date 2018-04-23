@@ -66,8 +66,10 @@ public class createGroup extends AppCompatActivity
             }
         });
     }
-    private void openNextActivity(){
-        Intent intent = new Intent(this, welcome.class);
+    private void openNextActivity(final String groupRefID){
+        Intent intent = new Intent().setClass(createGroup.this, viewGroup.class);
+        intent.putExtra("groupID", groupRefID);
+
         startActivity(intent);
     }
 
@@ -79,13 +81,13 @@ public class createGroup extends AppCompatActivity
         userMap.put("groupDesc", desc);
         userMap.put("owner_uid", user.getUid());
 
-         FireStore.collection("groupss").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        FireStore.collection("groupss").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 System.out.println("before ID");
                 System.out.println(documentReference.getId());
                 addUserReference(documentReference.getId(), name);
-                //Toast.makeText(createGroup.this, "Succesful Group Creation", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(createGroup.this, "Successful Group Creation", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -123,7 +125,7 @@ public class createGroup extends AppCompatActivity
         });
     }
 
-    private void addGroupUserReference(String userRefID, String groupRefID) {
+    private void addGroupUserReference(String userRefID, final String groupRefID) {
         Map<String, String> userMap = new HashMap<>();
         userMap.put("userID", user.getUid());
         userMap.put("deleteID", userRefID);
@@ -140,7 +142,7 @@ public class createGroup extends AppCompatActivity
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         //it works!
-                        openNextActivity();
+                        openNextActivity(groupRefID);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
