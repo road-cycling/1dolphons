@@ -7,23 +7,38 @@
     android:layout_height="match_parent"
     tools:context="com.example.btcpro.dolphons.viewGroup">
 
-    <ImageView
-        android:id="@+id/imgviewProfilePicture"
-        android:layout_width="384dp"
-        android:layout_height="127dp"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@mipmap/ic_launcher" />
-
-    <TextView
-        android:id="@+id/nameTitle"
-        android:layout_below="@+id/imgviewProfilePicture"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="GROUP NAME"
-        android:textSize="30dp"
-        android:textAlignment="center"
-        app:layout_flexBasisPercent="40%"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="127dp" />
+        android:layout_height="match_parent"
+        android:background="#00BCD4">
 
+        <ImageView
+            android:id="@+id/imgviewProfilePicture"
+            android:layout_width="384dp"
+            android:layout_height="127dp"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/nameTitle"
+            android:layout_below="@+id/imgviewProfilePicture"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            app:layout_flexBasisPercent="40%"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="127dp" />
+
+        <TextView
+            android:id="@+id/groupDescript"
+            android:layout_below="@+id/nameTitle"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:textSize="15dp"
+            android:textAlignment="center"
+            app:layout_flexBasisPercent="40%"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="127dp" />
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
