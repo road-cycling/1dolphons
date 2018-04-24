@@ -142,6 +142,7 @@ public class createGroup extends AppCompatActivity
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         //it works!
+                        System.out.println("OWNER INFO SET");
                         openNextActivity(groupRefID);
                     }
                 }).addOnFailureListener(new OnFailureListener() {

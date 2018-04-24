@@ -12,11 +12,46 @@
         android:layout_height="match_parent"
         android:background="#00BCD4">
 
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="#0097A7"
+            >
+
+            <Button
+                android:id="@+id/editGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="Edit"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/createEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:text="Create Event"
+                android:textAlignment="viewEnd"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+
+
+        </RelativeLayout>
+
         <ImageView
             android:id="@+id/imgviewProfilePicture"
             android:layout_width="384dp"
             android:layout_height="127dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
             app:srcCompat="@mipmap/ic_launcher" />
 
         <TextView
@@ -40,5 +75,39 @@
             app:layout_flexBasisPercent="40%"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="127dp" />
+
+        <LinearLayout
+            android:id="@+id/laytbtns"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/LstPeriodOptions"
+
+            android:layout_marginTop="5dp">
+
+            <Button
+                android:id="@+id/joinGroup"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="1"
+                android:background="#0097A7"
+
+                android:shadowColor="#0097A7"
+                android:text="Join Group"
+                android:textColor="@android:color/white" />
+            <!--android:onClick="openEditGroup"-->
+            <!--<Button
+                android:id="@+id/joinGroup"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="#0097A7"
+                android:onClick="openJoinGroup"
+                android:text="Join Group"
+                android:textColor="@android:color/white" />-->
+        </LinearLayout>
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
