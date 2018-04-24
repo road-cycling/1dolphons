@@ -69,8 +69,8 @@ public class editGroup extends AppCompatActivity
                 {
 
                 }
-                groupName.setText(documentSnapshot.getData().get("groupName").toString());
-                groupDesc.setText(documentSnapshot.getData().get("groupDesc").toString());
+                groupName.setHint(documentSnapshot.getData().get("groupName").toString());
+                groupDesc.setHint(documentSnapshot.getData().get("groupDesc").toString());
             }
         });
 
@@ -81,13 +81,9 @@ public class editGroup extends AppCompatActivity
             public void onClick(View view)
             {
 
-                System.out.println("#2");
-                System.out.println(groupRefID);
-                //final String groupID = intent.getStringExtra("groupID");
-
                 String name = groupName.getText().toString();
                 String desc = groupDesc.getText().toString();
-                //
+
                 boolean privateCheck = privateGroup.isChecked();
 
                 Map<String, String> userMap = new HashMap<>();
@@ -102,9 +98,6 @@ public class editGroup extends AppCompatActivity
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            System.out.println("#3");
-                            System.out.println(groupRefID);
-                            //final String groupID = intent.getStringExtra("groupID");
                             Intent intent = new Intent().setClass(editGroup.this, viewGroup.class);
                             intent.putExtra("groupID", groupRefID);
 

@@ -51,13 +51,22 @@
 
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="100dp"
             android:layout_height="80dp"
-            android:background="#00BCD4"
-            android:gravity="center"
+            android:background="#26C6DA"
+            app:layout_flexBasisPercent="20%"
+            android:gravity="center">
 
-            app:layout_flexBasisPercent="10%">
-
+            <EditText
+                android:id="@+id/Title"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#51D1E2"
+                android:inputType="textPersonName"
+                android:padding="5dp"
+                android:hint="Event Name" />
 
             <EditText
                 android:id="@+id/location"
@@ -75,10 +84,10 @@
         <LinearLayout
             android:layout_width="100dp"
             android:layout_height="80dp"
-            android:background="#00BCD4"
+            android:background="#26C6DA"
             android:gravity="center"
 
-            app:layout_flexBasisPercent="35%">
+            app:layout_flexBasisPercent="40%">
 
 
             <EditText
@@ -87,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="#51D1E2"
-                android:gravity="top|left"
+                android:gravity="top|start"
                 android:inputType="textMultiLine"
                 android:lines="8"
                 android:minLines="6"
@@ -104,17 +113,15 @@
             android:orientation="vertical"
             android:padding="5dp"
 
-            app:layout_flexBasisPercent="30%"
+            app:layout_flexBasisPercent="15%"
             tools:layout_editor_absoluteY="128dp">
 
 
-            <EditText
+            <Button
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:gravity="center"
-                android:id="@+id/Birthday"
-                android:clickable="true"
-                android:editable="false"
+                android:id="@+id/Date"
                 android:text="Set Date" />
         </LinearLayout>
 

@@ -100,15 +100,6 @@
             android:onClick="openEditProfile"
             app:srcCompat="@mipmap/ic_launcher" />
 
-        <Button
-            android:id="@+id/adminPanelHOTFIX"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/imgviewProfilePicture"
-            android:layout_marginTop="72dp"
-            android:onClick="openAdminPanel"
-            android:text="adminPanelHOTFIX(TEMP)" />
     </RelativeLayout>
 
 

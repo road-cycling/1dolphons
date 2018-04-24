@@ -125,7 +125,7 @@ public class createGroup extends AppCompatActivity
         });
     }
 
-    private void addGroupUserReference(String userRefID, final String groupRefID) {
+    private void addGroupUserReference(final String userRefID, final String groupRefID) {
         Map<String, String> userMap = new HashMap<>();
         userMap.put("userID", user.getUid());
         userMap.put("deleteID", userRefID);
@@ -144,6 +144,7 @@ public class createGroup extends AppCompatActivity
                         //it works!
                         System.out.println("OWNER INFO SET");
                         openNextActivity(groupRefID);
+                        //addGroupEvent(userRefID, groupRefID);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -152,6 +153,33 @@ public class createGroup extends AppCompatActivity
             }
         });
     }
+
+    /*private void addGroupEvent(String userRefID, final String groupRefID) {
+        Map<String, String> userMap = new HashMap<>();
+        userMap.put("groupID", groupRefID);
+        userMap.put("title", " ");
+        userMap.put("location", " ");
+        userMap.put("summary", " "); //I think we need this
+        userMap.put("date", " ");
+
+        FireStore
+                .collection("groupss")
+                .document(groupRefID)
+                .collection("events")
+                .add(userMap)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        //it works!
+                        openNextActivity(groupRefID);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                *//* shake? *//*
+            }
+        });
+    }*/
 }
 
 /*public class createGroup extends AppCompatActivity {

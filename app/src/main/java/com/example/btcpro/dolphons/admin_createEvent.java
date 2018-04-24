@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -24,11 +25,14 @@ import java.util.Map;
 public class admin_createEvent extends AppCompatActivity {
 
     private FirebaseFirestore FireStore;
+    EditText Title;
     EditText Location;
     EditText Summary;
-    String groupID;
     Calendar myCalendar;
-    EditText edittext;
+    Button editDate;
+
+    private Intent intent;
+    String groupID;
 
     int Calday, Calmonth, Calyear;
 
@@ -40,14 +44,17 @@ public class admin_createEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_create_event);
 
-        groupID   = getIntent().getExtras().getString("groupID");
+        intent = this.getIntent();
+        groupID = intent.getStringExtra("groupID");
         FireStore = FirebaseFirestore.getInstance();
+
+        Title = findViewById(R.id.Title);
         Summary   = findViewById(R.id.Summary);
         Location  = findViewById(R.id.location);
 
         myCalendar = Calendar.getInstance();
 
-        EditText edittext= findViewById(R.id.Birthday);
+        Button editDate = findViewById(R.id.Date);
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -60,7 +67,7 @@ public class admin_createEvent extends AppCompatActivity {
 
         };
 
-        edittext.setOnClickListener(new View.OnClickListener() {
+        editDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -74,13 +81,14 @@ public class admin_createEvent extends AppCompatActivity {
 
     public void createEvent(View v) {
         //we create event here
+        String title = Title.getText().toString();
         String summary = Summary.getText().toString();
         String location = Location.getText().toString();
-
         String date = Integer.toString(Calmonth) + "/" + Integer.toString(Calday) + "/" + Integer.toString(Calyear);
 
         Map<String, String> userMap = new HashMap<>();
-
+        userMap.put("groupeID", groupID);
+        userMap.put("title", title);
         userMap.put("location", location);
         userMap.put("summary", summary);
         userMap.put("date", date);
@@ -115,11 +123,12 @@ public class admin_createEvent extends AppCompatActivity {
         String myFormat = "EEE, MMM d, ''yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         System.out.println("called");
-        edittext.setText(sdf.format(myCalendar.getTime()));
+        editDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     public void navigate() {
-        Intent intent = new Intent(this, welcome.class);
+        Intent intent = new Intent(this, viewGroup.class);
+        intent.putExtra("groupID", groupID);
         startActivity(intent);
     }
 

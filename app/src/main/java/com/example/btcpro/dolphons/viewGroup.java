@@ -49,12 +49,14 @@ public class viewGroup extends AppCompatActivity{
 
     private boolean admin;
 
+
     TextView nameTitle;
     TextView groupDescript;
     TextView joinGroup;
     TextView editGroup;
     TextView createEvent;
-
+    ListView eventsListView;
+    ArrayList<String> eventID;
 
 
     @Override
@@ -71,15 +73,16 @@ public class viewGroup extends AppCompatActivity{
         joinGroup = findViewById(R.id.joinGroup);
         editGroup = findViewById(R.id.editGroup);
         createEvent = findViewById(R.id.createEvent);
+        eventsListView = findViewById(R.id.eventListView);
+
+        final ArrayList<String> arrayList = new ArrayList<String>();
+        eventID = new ArrayList<String>();
 
         editGroup.setVisibility(View.GONE);
         createEvent.setVisibility(View.GONE);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-
-        System.out.println("#-1");
-        System.out.println(groupRefID);
 
         db.collection("groupss").document(groupRefID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -96,9 +99,6 @@ public class viewGroup extends AppCompatActivity{
         editGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("#0");
-                System.out.println(groupRefID);
-                //final String groupID = intent.getStringExtra("groupID");
                 Intent intent = new Intent().setClass(viewGroup.this, editGroup.class);
                 intent.putExtra("groupID", groupRefID);
 
@@ -106,9 +106,17 @@ public class viewGroup extends AppCompatActivity{
             }
         });
 
+        createEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent().setClass(viewGroup.this, admin_createEvent.class);
+                intent.putExtra("groupID", groupRefID);
 
-        System.out.println("#4");
-        System.out.println(groupRefID);
+                startActivity(intent);
+            }
+        });
+
+
         db.collection("groupss").document(groupRefID)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -134,5 +142,66 @@ public class viewGroup extends AppCompatActivity{
         });
 
 
+        db.collection("groupss").document(groupRefID).collection("events").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    List<DocumentSnapshot> data = queryDocumentSnapshots.getDocuments();
+                    for (DocumentSnapshot item : data) {
+                        System.out.println("IM INSIDE");
+                        System.out.println(groupRefID);
+                        System.out.println(item.getId());
+
+                        if (item.get("title") != null)
+                            arrayList.add(item.get("title").toString());
+                        else
+                            arrayList.add("Placeholder");
+
+                        /*if (item.get("location") != null)
+                            arrayList.add(item.get("location").toString());
+                        else
+                            arrayList.add("Placeholder");
+
+                        if (item.get("summary") != null)
+                            arrayList.add(item.get("summary").toString());
+                        else
+                            arrayList.add("Placeholder");
+
+                        if (item.get("date") != null)
+                            arrayList.add(item.get("date").toString());
+                        else
+                            arrayList.add("Placeholder");
+*/
+                        eventID.add(item.getId());
+
+                    }
+
+                    attach(arrayList);
+
+                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                }
+            });
+
     }
+
+    public void attach(final ArrayList arrayList) {
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, arrayList);
+
+        eventsListView.setAdapter(arrayAdapter);
+        eventsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent().setClass(viewGroup.this, viewEvent.class);
+                intent.putExtra("groupID", groupRefID);
+                intent.putExtra("eventID", eventID.get(i));
+                startActivity(intent);
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+
+
 }
