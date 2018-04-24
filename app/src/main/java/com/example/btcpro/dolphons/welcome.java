@@ -100,6 +100,7 @@ public class welcome extends AppCompatActivity {
             }
         }).setNegativeButton("No", null).show();
     }
+
 }
 
 

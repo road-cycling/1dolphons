@@ -36,7 +36,8 @@
         <activity android:name=".editUserName" />
         <activity android:name=".changeUserPassword" />
         <activity android:name=".adminPanel" />
-        <activity android:name=".admin_createEvent"></activity>
+        <activity android:name=".admin_createEvent" />
+        <activity android:name=".admin_viewuser"></activity>
     </application>
 
 </manifest>

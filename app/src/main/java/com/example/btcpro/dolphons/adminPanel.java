@@ -58,9 +58,9 @@ public class adminPanel extends AppCompatActivity {
     public void onIndex(int idx) {
         if (idx == 0) {
             // we know the user clicked on view users
-            //Intent intent = new Intent(this, /*viewUsers*/.class);
-            //intent.putExtra("groupID",intentData);
-            //startActivity(intent);
+            Intent intent = new Intent(this, admin_viewuser.class);
+            intent.putExtra("groupID",intentData);
+            startActivity(intent);
         } else if (idx == 1) {
             // we know the user clicked on Create Event
             Intent intent = new Intent(this, admin_createEvent.class);
