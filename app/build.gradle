@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.btcpro.dolphons"
-        minSdkVersion 27
+        minSdkVersion 24
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -30,8 +30,16 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.google.firebase:firebase-auth:12.0.1'
 
+    //For Image Upload and Retrieval
+    implementation 'com.android.support:cardview-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
     //Firebase Querries
     implementation 'com.google.firebase:firebase-firestore:12.0.1'
+
+    //Firebase image upload
+    compile 'com.google.firebase:firebase-storage:12.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
