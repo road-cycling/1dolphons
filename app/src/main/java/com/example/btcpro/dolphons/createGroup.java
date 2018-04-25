@@ -115,13 +115,15 @@ public class createGroup extends AppCompatActivity
                         Toast.makeText(createGroup.this, "Error: " + error, Toast.LENGTH_SHORT).show();
                     }
                 });
-                openNextActivity();
+                //openNextActivity("");
 
             }
         });
     }
-    private void openNextActivity(){
-        Intent intent = new Intent(this, welcome.class);
+    private void openNextActivity(final String groupRefID){
+        Intent intent = new Intent().setClass(createGroup.this, viewGroup.class);
+        intent.putExtra("groupID", groupRefID);
+
         startActivity(intent);
     }
 
@@ -189,20 +191,19 @@ public class createGroup extends AppCompatActivity
 
     private void addGroupToFireStore(final String name, String desc, boolean privateCheck) {
         Map<String, String> userMap = new HashMap<>();
-        System.out.println("BEFORE!!!");
         System.out.println(user.getUid());
         System.out.println(FireStore);
         userMap.put("groupName", name);
         userMap.put("groupDesc", desc);
         userMap.put("owner_uid", user.getUid());
 
-         FireStore.collection("groupss").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        FireStore.collection("groupss").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 System.out.println("before ID");
                 System.out.println(documentReference.getId());
                 addUserReference(documentReference.getId(), name);
-                //Toast.makeText(createGroup.this, "Succesful Group Creation", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(createGroup.this, "Successful Group Creation", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -240,7 +241,7 @@ public class createGroup extends AppCompatActivity
         });
     }
 
-    private void addGroupUserReference(String userRefID, String groupRefID) {
+    private void addGroupUserReference(final String userRefID, final String groupRefID) {
         Map<String, String> userMap = new HashMap<>();
         userMap.put("userID", user.getUid());
         userMap.put("deleteID", userRefID);
@@ -257,7 +258,9 @@ public class createGroup extends AppCompatActivity
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         //it works!
-                        openNextActivity();
+                        System.out.println("OWNER INFO SET");
+                        openNextActivity(groupRefID);
+                        //addGroupEvent(userRefID, groupRefID);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -266,6 +269,33 @@ public class createGroup extends AppCompatActivity
             }
         });
     }
+
+    /*private void addGroupEvent(String userRefID, final String groupRefID) {
+        Map<String, String> userMap = new HashMap<>();
+        userMap.put("groupID", groupRefID);
+        userMap.put("title", " ");
+        userMap.put("location", " ");
+        userMap.put("summary", " "); //I think we need this
+        userMap.put("date", " ");
+
+        FireStore
+                .collection("groupss")
+                .document(groupRefID)
+                .collection("events")
+                .add(userMap)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        //it works!
+                        openNextActivity(groupRefID);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                *//* shake? *//*
+            }
+        });
+    }*/
 }
 
 /*public class createGroup extends AppCompatActivity {

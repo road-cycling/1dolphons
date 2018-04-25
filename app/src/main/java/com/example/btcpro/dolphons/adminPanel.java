@@ -1,10 +1,12 @@
 package com.example.btcpro.dolphons;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -21,6 +23,8 @@ public class adminPanel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         setContentView(R.layout.activity_admin_panel);
 
 
@@ -31,6 +35,8 @@ public class adminPanel extends AppCompatActivity {
         arrayList.add("Create Event");
 
         myGroupsListView = findViewById(R.id.myGroupsListView);
+
+        attach(arrayList);
 
     }
 
@@ -52,9 +58,9 @@ public class adminPanel extends AppCompatActivity {
     public void onIndex(int idx) {
         if (idx == 0) {
             // we know the user clicked on view users
-            //Intent intent = new Intent(this, /*viewUsers*/.class);
-            //intent.putExtra("groupID",intentData);
-            //startActivity(intent);
+            Intent intent = new Intent(this, admin_viewuser.class);
+            intent.putExtra("groupID",intentData);
+            startActivity(intent);
         } else if (idx == 1) {
             // we know the user clicked on Create Event
             Intent intent = new Intent(this, admin_createEvent.class);

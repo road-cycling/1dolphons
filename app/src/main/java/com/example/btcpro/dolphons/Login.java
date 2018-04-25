@@ -15,6 +15,8 @@ import android.widget.Toast;
 //import com.google.firebase.auth.*;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +24,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Login extends AppCompatActivity {
@@ -35,6 +43,8 @@ public class Login extends AppCompatActivity {
     String name;
     Boolean signIn = true;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private FirebaseUser user;
 
 
     TextView nameView;
@@ -49,6 +59,9 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        db = FirebaseFirestore.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         nameView = findViewById(R.id.nameView);
         emailView = findViewById(R.id.emailView);
@@ -105,7 +118,7 @@ public class Login extends AppCompatActivity {
 
     /* Thanks Google */
 
-    private void createAccount(String email, String password, String password2, String name) {
+    private void createAccount(String email, String password, String password2, final String name) {
         final String userName = name;
 
         if (password.equals(password2)) {
@@ -128,6 +141,7 @@ public class Login extends AppCompatActivity {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
                                                     Log.d(TAG, "user profile updated.");
+                                                    //writeUserData(name);
                                                     updateUI(true);
                                                 }
                                             }
@@ -151,6 +165,16 @@ public class Login extends AppCompatActivity {
     }
 
 
+    private void writeUserData(final String name) {
+        // DOES NOT WORK YET
+        Map<String, String> data = new HashMap<>();
+        data.put("Name", name);
+        data.put("UID", user.getUid());
+
+        db.collection("users").document(name)
+                .set(data, SetOptions.merge());
+
+    }
 
     private void signIn(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.btcpro.dolphons.viewEvent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00BCD4">
+
+        <RelativeLayout
+            android:id="@+id/header2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="#0097A7"
+            >
+
+            <Button
+                android:id="@+id/editEvent2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="Edit"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/deleteEvent2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:text="Delete"
+                android:textAlignment="viewEnd"
+                android:textColor="#FF0000"
+                android:textSize="20sp" />
+
+
+
+        </RelativeLayout>
+
+        <!--<RelativeLayout
+            android:id="@+id/loadingPanel2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+        </RelativeLayout>-->
+
+
+        <TextView
+            android:id="@+id/nameTitle2"
+            android:layout_below="@+id/header2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            app:layout_flexBasisPercent="40%"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="127dp" />
+
+        <TextView
+            android:id="@+id/eventDescript2"
+            android:layout_below="@+id/nameTitle2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:textSize="15dp"
+            android:textAlignment="center"
+            app:layout_flexBasisPercent="40%"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="127dp" />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
+
