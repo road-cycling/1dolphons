@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".editUserName">
+    tools:context=".editUserName"
+    android:background="#00BCD4">
 
     <EditText
         android:id="@+id/edittextName"
@@ -33,7 +34,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonCancel"
-        app:layout_constraintTop_toBottomOf="@+id/edittextName" />
+        app:layout_constraintTop_toBottomOf="@+id/edittextName"
+        android:background="@drawable/button_lightblueback_whiteoutline" />
 
     <Button
         android:id="@+id/buttonCancel"
@@ -46,5 +48,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonSave"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittextName" />
+        app:layout_constraintTop_toBottomOf="@+id/edittextName"
+        android:background="@drawable/button_lightblueback_whiteoutline" />
 </android.support.constraint.ConstraintLayout>

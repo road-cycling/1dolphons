@@ -8,14 +8,15 @@
     android:paddingLeft="3dp"
     android:paddingRight="3dp"
     android:paddingBottom="10dp"
-    >
+    android:background="#00BCD4">
 
     <TextView
         android:id="@+id/contact_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        />
+        android:background="#00BCD4"
+    />
 
     <Button
         android:id="@+id/message_button"
@@ -24,5 +25,5 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textSize="10sp"
-        />
+        android:background="@drawable/button_lightblueback_whiteoutline" />
 </LinearLayout>

@@ -122,7 +122,8 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:id="@+id/Date"
-                android:text="Set Date" />
+                android:text="Set Date"
+                android:background="@drawable/button_lightblueback_whiteoutline" />
         </LinearLayout>
 
         <LinearLayout
@@ -141,9 +142,10 @@
                 android:id="@+id/button3"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:background="#00838F"
+
                 android:onClick="createEvent"
-                android:text="Create" />
+                android:text="Create"
+                android:background="@drawable/button_lightblueback_whiteoutline"/>
         </LinearLayout>
 
     </com.google.android.flexbox.FlexboxLayout>

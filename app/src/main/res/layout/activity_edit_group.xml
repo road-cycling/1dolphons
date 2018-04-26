@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.btcpro.dolphons.editGroup">
+    tools:context="com.example.btcpro.dolphons.editGroup"
+    android:background="#00BCD4">
 
     <Button
         android:id="@+id/buttonSubmit"
@@ -16,8 +17,9 @@
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/button_lightblueback_whiteoutline"/>
 
     <CheckBox
         android:id="@+id/checkboxPrivate"

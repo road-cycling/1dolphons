@@ -44,19 +44,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#00BCD4"
                 android:onClick="signUp"
                 android:text="Sign Up"
-                android:textColor="#0097A7" />
+                android:textColor="#6b6b6b"
+                android:background="@drawable/button_lightblueback_whiteoutline" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#00BCD4"
                 android:onClick="login"
                 android:text="Login"
-                android:textColor="#0097A7" />
+                android:textColor="#6b6b6b"
+                android:background="@drawable/button_lightblueback_whiteoutline" />
 
         </LinearLayout>
 
@@ -65,7 +65,7 @@
             android:orientation="vertical"
             android:layout_width="100dp"
             android:layout_height="80dp"
-            android:background="#26C6DA"
+            android:background="#00BCD4"
             app:layout_flexBasisPercent="60%"
             android:gravity="center"
 
@@ -131,10 +131,9 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#26C6DA"
+                android:background="@drawable/button_lightblueback_whiteoutline"
                 android:onClick="loginSignup"
-                android:text="Log In"
-                android:textColor="@android:color/white" />
+                android:text="Log In" />
         </LinearLayout>
 
 
