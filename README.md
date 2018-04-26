@@ -3,7 +3,7 @@
 William: Log in / sign up, View Group, Create Event
 Sergio: createGroup, Messaging
 Tyler: createGroup, Messaging
-Trenton: joinGroup
+Trenton: editUserProfile, changeUserPassword
 Nathon:
 
 Finished:
