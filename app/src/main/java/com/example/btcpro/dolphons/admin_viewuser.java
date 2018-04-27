@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,41 +29,31 @@ public class admin_viewuser extends AppCompatActivity {
     private FirebaseFirestore FireStore;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_viewuser);
 
-        fUser = new ArrayList<firebaseUser>();
+        fUser = new ArrayList<>();
         FireStore = FirebaseFirestore.getInstance();
 
-
-        fUser.add(new firebaseUser("Nathan", "f"));
-        fUser.add(new firebaseUser("Nathan", "f"));
-        fUser.add(new firebaseUser("Nathan", "f"));
-        fUser.add(new firebaseUser("Nathan", "f"));
-
-
-        RecyclerView rvContacts = findViewById(R.id.rvContacts);
-
-
-        //contacts = Contact.createContactsList(20);
-        ContactsAdapter adapter = new ContactsAdapter(fUser);
-
-        rvContacts.setAdapter(adapter);
-
-        rvContacts.setLayoutManager(new LinearLayoutManager(this));
-
-        query(adapter);
+        query();
+        fUser.add(new firebaseUser("Nate", "f"));
+        fUser.add(new firebaseUser("Nate", "fa"));
+        fUser.add(new firebaseUser("Nate", "faa"));
+        fUser.add(new firebaseUser("Nate", "faaa"));
 
 
 
     }
 
-    public void query(ContactsAdapter adapter) {
+
+    public void query() {
+
         FireStore
                 .collection("groupss")
-                .document("z6lBx0owSf5jRN6Jfnfa") /* for testing would be users uid in real life */
+                .document("Lpux0m1ZmAHgiulBbvOZ") /* for testing would be users uid in real life */
                 .collection("users")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -69,25 +61,35 @@ public class admin_viewuser extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         List<DocumentSnapshot> data = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot item : data) {
+                            System.out.println(item.getData());
                             fUser.add(new firebaseUser(item));
                         }
+                        addAdapter();
 
                     }
                 });
-        adapter.notifyDataSetChanged(); //notworking
+    }
 
+    public void addAdapter() {
+        RecyclerView rvContacts = findViewById(R.id.rvContacts);
 
+        ContactsAdapter adapter = new ContactsAdapter(fUser);
+
+        rvContacts.setAdapter(adapter);
+
+        rvContacts.setLayoutManager(new LinearLayoutManager(this));
 
     }
+
 }
 
 class firebaseUser {
     private String uName;
-    private String deleteID; //pos
+    private String deleteID;
 
     public firebaseUser(DocumentSnapshot data) {
-        uName = data.get("name").toString();
-        deleteID = data.get("deleteID").toString();
+        uName = data.get("user_name").toString();
+        deleteID = data.get("userID").toString();
     }
 
     public firebaseUser(String name, String id) {
@@ -101,6 +103,48 @@ class firebaseUser {
 
     public String getDeleteID() {
         return deleteID;
+    }
+
+    public void deleteUser() {
+
+        FirebaseFirestore FireStore = FirebaseFirestore.getInstance();
+        String groupID = "Lpux0m1ZmAHgiulBbvOZ";
+
+        FireStore
+                .collection("groupss")
+                .document(groupID)
+                .collection("users")
+                .whereEqualTo("userID", deleteID)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> data = queryDocumentSnapshots.getDocuments();
+                        for (DocumentSnapshot item : data) {
+                            item.getReference().delete();
+                        }
+
+
+                    }
+                });
+
+
+        FireStore
+                .collection("users")
+                .document(deleteID)
+                .collection("groupsApartOf")
+                .whereEqualTo("groupID", groupID)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> data = queryDocumentSnapshots.getDocuments();
+                        for (DocumentSnapshot item : data) {
+                            item.getReference().delete();
+                        }
+                    }
+                });
+
     }
 }
 
@@ -119,8 +163,8 @@ class ContactsAdapter extends
 
             super(itemView);
 
-            nameTextView = (TextView) itemView.findViewById(R.id.contact_name);
-            messageButton = (Button) itemView.findViewById(R.id.message_button);
+            nameTextView =  itemView.findViewById(R.id.contact_name);
+            messageButton = itemView.findViewById(R.id.message_button);
         }
     }
 
@@ -140,17 +184,25 @@ class ContactsAdapter extends
 
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(contactView);
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ContactsAdapter.ViewHolder viewHolder, int position) {
-        firebaseUser contact = mContacts.get(position);
+        final firebaseUser contact = mContacts.get(position);
 
         TextView textView = viewHolder.nameTextView;
         textView.setText(contact.getName());
         Button button = viewHolder.messageButton;
         button.setText("Kick User");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                contact.deleteUser();
+            }
+        });
+
     }
 
     // Returns the total count of items in the list
