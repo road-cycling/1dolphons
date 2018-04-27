@@ -76,7 +76,7 @@ public class viewGroup extends AppCompatActivity{
         eventsListView = findViewById(R.id.eventListView);
 
         final ArrayList<String> arrayList = new ArrayList<String>();
-        eventID = new ArrayList<String>();
+        eventID = new ArrayList<>();
 
         editGroup.setVisibility(View.GONE);
         createEvent.setVisibility(View.GONE);
@@ -109,7 +109,7 @@ public class viewGroup extends AppCompatActivity{
         createEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent().setClass(viewGroup.this, admin_createEvent.class);
+                Intent intent = new Intent().setClass(viewGroup.this, adminPanel.class);
                 intent.putExtra("groupID", groupRefID);
 
                 startActivity(intent);

@@ -101,11 +101,6 @@ public class welcome extends AppCompatActivity {
         }).setNegativeButton("No", null).show();
     }
 
-    public void kickUser(View v) {
-        Intent intent = new Intent(this, admin_viewuser.class );
-        startActivity(intent);
-    }
-
 }
 
 

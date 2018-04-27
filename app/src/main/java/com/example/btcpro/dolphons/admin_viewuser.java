@@ -28,23 +28,20 @@ public class admin_viewuser extends AppCompatActivity {
     ArrayList<firebaseUser> fUser;
     private FirebaseFirestore FireStore;
 
-
+    public String intentData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_viewuser);
 
+
+        intentData = getIntent().getExtras().getString("groupID");
+
         fUser = new ArrayList<>();
         FireStore = FirebaseFirestore.getInstance();
 
         query();
-        fUser.add(new firebaseUser("Nate", "f"));
-        fUser.add(new firebaseUser("Nate", "fa"));
-        fUser.add(new firebaseUser("Nate", "faa"));
-        fUser.add(new firebaseUser("Nate", "faaa"));
-
-
 
     }
 
@@ -53,7 +50,7 @@ public class admin_viewuser extends AppCompatActivity {
 
         FireStore
                 .collection("groupss")
-                .document("Lpux0m1ZmAHgiulBbvOZ") /* for testing would be users uid in real life */
+                .document(intentData) /* for testing would be users uid in real life */
                 .collection("users")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -62,7 +59,7 @@ public class admin_viewuser extends AppCompatActivity {
                         List<DocumentSnapshot> data = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot item : data) {
                             System.out.println(item.getData());
-                            fUser.add(new firebaseUser(item));
+                            fUser.add(new firebaseUser(item, intentData));
                         }
                         addAdapter();
 
@@ -86,15 +83,18 @@ public class admin_viewuser extends AppCompatActivity {
 class firebaseUser {
     private String uName;
     private String deleteID;
+    public String intentData;
 
-    public firebaseUser(DocumentSnapshot data) {
+    public firebaseUser(DocumentSnapshot data, String intentData) {
         uName = data.get("user_name").toString();
         deleteID = data.get("userID").toString();
+        intentData = intentData;
     }
 
-    public firebaseUser(String name, String id) {
+    public firebaseUser(String name, String id, String intentData) {
         uName = name;
         deleteID = id;
+        intentData = intentData;
     }
 
     public String getName() {
@@ -108,11 +108,11 @@ class firebaseUser {
     public void deleteUser() {
 
         FirebaseFirestore FireStore = FirebaseFirestore.getInstance();
-        String groupID = "Lpux0m1ZmAHgiulBbvOZ";
+        //String groupID = "Lpux0m1ZmAHgiulBbvOZ";
 
         FireStore
                 .collection("groupss")
-                .document(groupID)
+                .document(intentData)
                 .collection("users")
                 .whereEqualTo("userID", deleteID)
                 .get()
@@ -133,7 +133,7 @@ class firebaseUser {
                 .collection("users")
                 .document(deleteID)
                 .collection("groupsApartOf")
-                .whereEqualTo("groupID", groupID)
+                .whereEqualTo("groupID", intentData)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
