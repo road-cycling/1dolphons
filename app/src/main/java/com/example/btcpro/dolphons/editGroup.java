@@ -1,6 +1,7 @@
 package com.example.btcpro.dolphons;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.Toast;
@@ -40,6 +42,7 @@ public class editGroup extends AppCompatActivity
 
     private Intent intent;
     String groupRefID;
+    ImageView image;
 
 
     private FirebaseFirestore FireStore;
@@ -59,8 +62,9 @@ public class editGroup extends AppCompatActivity
         groupDesc = (EditText) findViewById(R.id.enterGroupDesc);
         privateGroup = (CheckBox) findViewById(R.id.checkboxPrivate);
         submit = (Button) findViewById(R.id.buttonSubmit);
-        System.out.println("#1");
-        System.out.println(groupRefID);
+        image = findViewById(R.id.imagebuttonGroupPicture);
+
+
 
         FireStore.collection("groupss").document(groupRefID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -71,6 +75,14 @@ public class editGroup extends AppCompatActivity
                 }
                 groupName.setHint(documentSnapshot.getData().get("groupName").toString());
                 groupDesc.setHint(documentSnapshot.getData().get("groupDesc").toString());
+                if(documentSnapshot.getData().get("photoURL") != null){
+                    String URL = documentSnapshot.getData().get("photoURL").toString();
+                    Uri photoUrl = Uri.parse(URL);
+                    image.setImageURI(photoUrl);
+                    System.out.println(photoUrl + "url");
+                } else {
+                    System.out.println("IT IS NULL");
+                }
             }
         });
 

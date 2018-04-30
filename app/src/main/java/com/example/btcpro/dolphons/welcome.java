@@ -55,13 +55,13 @@ public class welcome extends AppCompatActivity {
                 userName.setText(message);
             }
             /* works but takes too long to load (huge file) */
-           // if(user.getPhotoUrl() != null){
-           //     Uri photoUrl = user.getPhotoUrl();
-           //     profilePicture.setImageURI(photoUrl);
-           //     System.out.println(photoUrl + "url");
-           // } else {
-           //     System.out.println("IT IS NULL");
-           // }
+            /*if(user.getPhotoUrl() != null){
+                Uri photoUrl = user.getPhotoUrl();
+                profilePicture.setImageURI(photoUrl);
+                System.out.println(photoUrl + "url");
+            } else {
+                System.out.println("IT IS NULL");
+            }*/
         }
         else{
             //User is not signed in, return to Login screen.

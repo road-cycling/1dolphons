@@ -91,7 +91,7 @@ public class createGroup extends AppCompatActivity
 
                 uploadFile();
 
-                addGroupToFireStore(name, desc, privateCheck);
+                addGroupToFireStore(name, desc, privateCheck, imageUri);
 
             }
         });
@@ -103,13 +103,14 @@ public class createGroup extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void addGroupToFireStore(final String name, String desc, boolean privateCheck) {
+    private void addGroupToFireStore(final String name, String desc, boolean privateCheck, Uri imageUri) {
         Map<String, String> userMap = new HashMap<>();
         System.out.println(user.getUid());
         System.out.println(FireStore);
         userMap.put("groupName", name);
         userMap.put("groupDesc", desc);
         userMap.put("owner_uid", user.getUid());
+        userMap.put("photoURL", imageUri.toString());
 
 
         FireStore.collection("groupss").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -208,7 +209,7 @@ public class createGroup extends AppCompatActivity
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                         {
-                            Toast.makeText(createGroup.this, "Group Succesfully Created", Toast.LENGTH_LONG).show();
+                            Toast.makeText(createGroup.this, "Group Successfully Created", Toast.LENGTH_LONG).show();
                             Upload upload = new Upload(taskSnapshot.getDownloadUrl().toString());
                             String uploadId = databaseRef.push().getKey();
                             databaseRef.child(uploadId).setValue(upload);
@@ -246,6 +247,8 @@ public class createGroup extends AppCompatActivity
             imageUri = data.getData();
 
             Picasso.with(this).load(imageUri).into(imageView);
+            System.out.println("IMAGE URI: ");
+            System.out.println(imageUri);
             //imageView.setImageURI(imageUri);
         }
     }
