@@ -13,7 +13,7 @@
         android:background="#00BCD4">
 
         <RelativeLayout
-            android:id="@+id/header2"
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -21,7 +21,7 @@
             >
 
             <Button
-                android:id="@+id/editEvent2"
+                android:id="@+id/editEvent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -30,7 +30,7 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/deleteEvent2"
+                android:id="@+id/deleteEvent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -60,8 +60,8 @@
 
 
         <TextView
-            android:id="@+id/nameTitle2"
-            android:layout_below="@+id/header2"
+            android:id="@+id/nameTitle"
+            android:layout_below="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:textSize="30dp"
@@ -71,8 +71,8 @@
             tools:layout_editor_absoluteY="127dp" />
 
         <TextView
-            android:id="@+id/eventDescript2"
-            android:layout_below="@+id/nameTitle2"
+            android:id="@+id/eventDescript"
+            android:layout_below="@+id/nameTitle"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:textSize="15dp"

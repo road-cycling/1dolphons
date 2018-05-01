@@ -204,8 +204,10 @@ public class viewGroup extends AppCompatActivity{
                 Intent intent = new Intent().setClass(viewGroup.this, viewEvent.class);
                 intent.putExtra("groupID", groupRefID);
                 intent.putExtra("eventID", eventID.get(i));
+                System.out.println("EVENT CLICKED!");
+                System.out.println(eventID.get(i));
                 startActivity(intent);
-                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
             }
         });
