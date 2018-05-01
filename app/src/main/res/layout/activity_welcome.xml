@@ -49,9 +49,9 @@
             android:id="@+id/textviewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/laytbtns"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="196dp"
+            android:layout_marginBottom="186dp"
             android:text="Hello"
             android:textColor="@android:color/black"
             android:textSize="24sp"
@@ -76,7 +76,9 @@
                 android:onClick="openCreateGroup"
                 android:shadowColor="#0097A7"
                 android:text="Create Group"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textAlignment="center"
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/joinGroup"
@@ -87,18 +89,23 @@
                 android:background="#0097A7"
                 android:onClick="openJoinGroup"
                 android:text="Join Group"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textAlignment="center"
+                android:textSize="20dp" />
         </LinearLayout>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imgviewProfilePicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="184dp"
+            android:layout_height="188dp"
             android:layout_above="@+id/textviewName"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="33dp"
+            android:adjustViewBounds="false"
             android:onClick="openEditProfile"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:background="@null"/>
 
     </RelativeLayout>
 

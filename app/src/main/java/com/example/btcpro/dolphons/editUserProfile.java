@@ -10,13 +10,17 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 //import android.widget.CheckBox;
 //import android.widget.EditText;
+import android.widget.EditText;
 import android.widget.ImageButton;
 //import android.widget.ImageView;
 //import android.widget.TextView;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,17 +35,20 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 //import com.google.firebase.database.DatabaseReference;
 //import com.google.firebase.database.FirebaseDatabase;
 //import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 //import java.util.HashMap;
 //import java.util.Map;
 
 public class editUserProfile extends AppCompatActivity {
 
     private ImageButton profilePicture;
-    private Button editName;
-    private Button changePassword;
-    private Button deleteAccount;
-    private Button returnToWelcome;
+    private EditText editName;
+    private TextView userEmail;
     private FirebaseFirestore FireStore;
     private FirebaseUser user;
 
@@ -53,21 +60,21 @@ public class editUserProfile extends AppCompatActivity {
         setContentView(R.layout.activity_edit_user_profile);
 
         profilePicture = findViewById(R.id.imagebuttonProfilePicture);
-        editName = findViewById(R.id.buttonEditName);
-        changePassword = findViewById(R.id.buttonChangePassword);
-        deleteAccount = findViewById(R.id.buttonDeleteAccount);
-        returnToWelcome = findViewById(R.id.buttonReturn);
+        editName = findViewById(R.id.edittextName);
+        userEmail = findViewById(R.id.textviewEmail);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         FireStore = FirebaseFirestore.getInstance();
         if(user != null){
             if(user.getDisplayName() != null){
-                String name = user.getDisplayName();
-                //String message = "Hello, " + name;
+                editName.setText(user.getDisplayName());
             }
             if(user.getPhotoUrl() != null){
-                Uri photoUrl = user.getPhotoUrl();
-                profilePicture.setImageURI(photoUrl);
+                //profilePicture.setImageURI(user.getPhotoUrl()); //works but is slow
+                Picasso.with(editUserProfile.this).load(user.getPhotoUrl()).into(profilePicture);
+            }
+            if(user.getEmail() != null){
+                userEmail.setText(user.getEmail());
             }
         }
         else{
@@ -82,44 +89,36 @@ public class editUserProfile extends AppCompatActivity {
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
-        editName.setOnClickListener(new View.OnClickListener() {
+        editName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                openEditUsername();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //Do nothing.
             }
-        });
-        changePassword.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {
-                openChangePassword();
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //Do nothing.
             }
-        });
-        deleteAccount.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {
-                deleteUserAccount();
-            }
-        });
-        returnToWelcome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openWelcome();
+            public void afterTextChanged(Editable editable) {
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(editName.getText().toString())
+                        .build();
+
+                user.updateProfile(profileUpdates);
             }
         });
     }
-    private void openWelcome(){
+    public void openWelcome(View v){
         Intent intent = new Intent(this, welcome.class);
         startActivity(intent);
     }
-    private void openEditUsername(){
-        Intent intent = new Intent(this, editUserName.class);
-        startActivity(intent);
-    }
-    private void openChangePassword(){
+    public void openChangePassword(View v){
         Intent intent = new Intent(this, changeUserPassword.class);
         startActivity(intent);
     }
-    private void deleteUserAccount(){
+    public void deleteUserAccount(View v){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_alert).setTitle("Delete Account?").setMessage("You won't be able to undo this.").setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
@@ -140,7 +139,7 @@ public class editUserProfile extends AppCompatActivity {
             }
         }).setNegativeButton("Don't Delete", null).show();
     }
-    private void openLogin(){
+    public void openLogin(){
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
         finish();
