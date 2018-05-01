@@ -100,6 +100,8 @@ public class viewGroup extends AppCompatActivity{
 
                     Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     Uri photoUrl = Uri.parse(documentSnapshot.getData().get("photoURL").toString());
+                    System.out.println("URL!!!!!!!!!!!!!!!!");
+                    System.out.println(photoUrl);
                     intent.setType(photoUrl.toString());
                     //image.setImageURI(Uri.parse(intent.toString()));
                     Picasso.with(viewGroup.this).load(photoUrl).into(image);

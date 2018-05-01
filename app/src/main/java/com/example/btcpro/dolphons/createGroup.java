@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 public class createGroup extends AppCompatActivity
@@ -45,6 +46,9 @@ public class createGroup extends AppCompatActivity
     private ImageView imageView;
 
     private Uri imageUri;
+    private String name;
+    private String desc;
+    private boolean privateCheck;
     private StorageReference storageRef;
     private DatabaseReference databaseRef;
 
@@ -83,15 +87,13 @@ public class createGroup extends AppCompatActivity
             public void onClick(View view)
             {
                 //What to do after create button is pressed
-                String name = groupName.getText().toString();
-                String desc = groupDesc.getText().toString();
+                name = groupName.getText().toString();
+                desc = groupDesc.getText().toString();
 
                 //Checkbox not done yet
-                boolean privateCheck = privateGroup.isChecked();
+                privateCheck = privateGroup.isChecked();
 
                 uploadFile();
-
-                addGroupToFireStore(name, desc, privateCheck, imageUri);
 
             }
         });
@@ -201,7 +203,8 @@ public class createGroup extends AppCompatActivity
     {
         if (imageUri != null)
         {
-            StorageReference fileReference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+            //StorageReference fileReference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+            final StorageReference fileReference = storageRef.child(imageUri.toString());
 
             fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
@@ -209,10 +212,14 @@ public class createGroup extends AppCompatActivity
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                         {
+                            //imageUri = Uri.parse(fileReference.getDownloadUrl().toString());
                             Toast.makeText(createGroup.this, "Group Successfully Created", Toast.LENGTH_LONG).show();
                             Upload upload = new Upload(taskSnapshot.getDownloadUrl().toString());
                             String uploadId = databaseRef.push().getKey();
+                            imageUri = taskSnapshot.getDownloadUrl();
                             databaseRef.child(uploadId).setValue(upload);
+
+                            addGroupToFireStore(name, desc, privateCheck, imageUri);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener()

@@ -41,6 +41,8 @@ dependencies {
 
     //Firebase image upload
     implementation 'com.google.firebase:firebase-storage:12.0.1'
+
+    implementation 'com.firebaseui:firebase-ui-storage:0.6.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
