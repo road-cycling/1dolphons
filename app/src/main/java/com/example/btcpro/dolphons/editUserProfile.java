@@ -150,7 +150,7 @@ public class editUserProfile extends AppCompatActivity {
 
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             user = FirebaseAuth.getInstance().getCurrentUser();
-            Uri selectedImage = data.getData();
+            //Uri selectedImage = data.getData();
             //String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
             //Cursor cursor = getContentResolver().query(selectedImage,
@@ -164,7 +164,7 @@ public class editUserProfile extends AppCompatActivity {
             //ImageView imageView = findViewById(R.id.imagebuttonProfilePicture);
             //imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 
-            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setPhotoUri(selectedImage).build();
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(data.getDataString())).build();
             user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

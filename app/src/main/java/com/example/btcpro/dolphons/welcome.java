@@ -61,7 +61,7 @@ public class welcome extends AppCompatActivity {
                 //Uri photoUrl = user.getPhotoUrl();
                 //profilePicture.setImageURI(photoUrl); // works but takes too long to load (huge file)
                 Picasso.with(welcome.this).load(user.getPhotoUrl()).into(profilePicture);
-                System.out.println(user.getPhotoUrl() + "url");
+                System.out.println(user.getPhotoUrl() + "url blahbalhbalh");
             } else {
                 System.out.println("User's Profile Picture IS NULL");
             }
