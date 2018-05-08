@@ -29,7 +29,9 @@
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             app:layout_flexBasisPercent="30%"
-            />
+            >
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -44,10 +46,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/button_lightblueback_whiteoutline"
                 android:onClick="signUp"
                 android:text="Sign Up"
-                android:textColor="#6b6b6b"
-                android:background="@drawable/button_lightblueback_whiteoutline" />
+                android:textColor="#6b6b6b" />
 
             <Button
                 android:layout_width="wrap_content"

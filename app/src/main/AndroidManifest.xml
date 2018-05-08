@@ -26,6 +26,7 @@
         <activity android:name=".joinGroup" />
         <activity android:name=".createGroup" />
         <activity android:name=".viewGroup" />
+        <activity android:name=".messagePage" />
         <activity android:name=".editGroup" />
         <activity android:name=".viewEvent" />
         <activity android:name=".editUserProfile" />

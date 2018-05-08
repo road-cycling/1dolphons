@@ -69,6 +69,11 @@ public class welcome extends AppCompatActivity {
         }
 
     }
+    public void openMessagePage(View v){
+        Intent intent = new Intent(this, messagePage.class);
+        startActivity(intent);
+    }
+
     public void openCreateGroup(View v){
         Intent intent = new Intent(this, createGroup.class);
         startActivity(intent);
