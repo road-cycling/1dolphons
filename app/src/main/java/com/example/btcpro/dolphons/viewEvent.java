@@ -49,6 +49,7 @@ public class viewEvent extends AppCompatActivity{
     private FirebaseUser user;
 
     private boolean admin;
+    private boolean eventFound;
 
     TextView nameTitle;
     TextView eventDescript;
@@ -59,95 +60,132 @@ public class viewEvent extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_group);
+        setContentView(R.layout.activity_view_event);
 
         intent = this.getIntent();
         groupRefID = intent.getStringExtra("groupID");
         eventRefID = intent.getStringExtra("eventID");
 
-        nameTitle = findViewById(R.id.nameTitle2);
-        eventDescript = findViewById(R.id.eventDescript2);
-        editEvent = findViewById(R.id.editEvent2);
-        deleteEvent = findViewById(R.id.deleteEvent2);
+        nameTitle = findViewById(R.id.nameTitle);
+        eventDescript = findViewById(R.id.eventDescript);
+        editEvent = findViewById(R.id.editEvent);
+        deleteEvent = findViewById(R.id.deleteEvent);
 
-        //editEvent.setVisibility(View.GONE);
-        //deleteEvent.setVisibility(View.GONE);
+        editEvent.setVisibility(View.GONE);
+        deleteEvent.setVisibility(View.GONE);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        System.out.println("IM INSIDE");
-        System.out.println(groupRefID);
-        System.out.println(eventRefID);
 
-        db.collection("groupss").document(groupRefID).collection("events").document(eventRefID)
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        eventFound = true;
+
+        db.collection("groupss").document(groupRefID).collection("events").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
-                        if (e != null) {
-
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> data = queryDocumentSnapshots.getDocuments();
+                        for (DocumentSnapshot item : data) {
+                            if (item.getId().equals(eventRefID)) {
+                                eventFound = true;
+                            } else {
+                                eventFound = false;
+                            }
                         }
-                        String temp = "Place holder";
-                        //nameTitle.setText(temp);
-                        //eventDescript.setText(temp);
-                        /*if (documentSnapshot.getData().get("title") != null)
-                            nameTitle.setText(documentSnapshot.getData().get("title").toString());
-                        else
-                            nameTitle.setText(temp);
-
-                        if (documentSnapshot.getData().get("summary") != null)
-                            eventDescript.setText(documentSnapshot.getData().get("summary").toString());
-                        else
-                            eventDescript.setText(temp);*/
                     }
-
                 });
 
+        if (eventFound) {
+            editEvent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    editEvent();
+                }
+            });
 
-        /*editEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                *//*Intent intent = new Intent().setClass(viewEvent.this, editEvent.class);
+            deleteEvent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteEvent();
+                }
+            });
+
+            db.collection("groupss").document(groupRefID).collection("events").document(eventRefID)
+                    .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+
+                            if (e != null) {
+
+                            }
+                            
+                            if (documentSnapshot.getData() != null) {
+                                    nameTitle.setText(documentSnapshot.getData().get("title").toString());
+                                    eventDescript.setText(documentSnapshot.getData().get("summary").toString());
+                            }
+                        }
+
+                    });
+
+
+            db.collection("groupss").document(groupRefID)
+                    .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                            if (e != null) {
+
+                            }
+                            String adminID = documentSnapshot.getData().get("owner_uid").toString();
+                            if (adminID.equals(user.getUid())) {
+                                admin = true;
+                            } else {
+                                admin = false;
+                            }
+
+                            if (admin) {
+                                editEvent.setVisibility(View.VISIBLE);
+                                deleteEvent.setVisibility(View.VISIBLE);
+                            }
+
+                        }
+                    });
+        }
+    }
+
+    private void openViewGroup() {
+        Intent intent = new Intent().setClass(viewEvent.this, viewGroup.class);
+        intent.putExtra("groupID", groupRefID);
+
+        startActivity(intent);
+    }
+
+    private void deleteEvent() {
+        db.collection("groupss").document(groupRefID).collection("events").document(eventRefID)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Event successfully deleted!");
+
+                        openViewGroup();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Error deleting event!");
+
+                        openViewGroup();
+                    }
+                });
+
+    }
+
+    private void editEvent() {
+        /*Intent intent = new Intent().setClass(viewEvent.this, editEvent.class);
                 intent.putExtra("groupID", groupRefID);
                 intent.putExtra("eventID", eventRefID);
 
-                startActivity(intent);*//*
-            }
-        });
-
-        deleteEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // ADD CODE TO DELETE THE EVENT
-
-                Intent intent = new Intent().setClass(viewEvent.this, viewGroup.class);
-                intent.putExtra("groupID", groupRefID);
-
-                startActivity(intent);
-            }
-        });
-*/
-
-        /*db.collection("groupss").document(groupRefID)
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
-                        if (e != null) {
-
-                        }
-                        String adminID = documentSnapshot.getData().get("owner_uid").toString();
-                        if (adminID.equals(user.getUid())) {
-                            admin = true;
-                        } else {
-                            admin = false;
-                        }
-
-                        if (admin) {
-//                            editEvent.setVisibility(View.VISIBLE);
-//                            deleteEvent.setVisibility(View.VISIBLE);
-                        }
-
-                    }
-                });*/
+                startActivity(intent);*/
     }
 
 }

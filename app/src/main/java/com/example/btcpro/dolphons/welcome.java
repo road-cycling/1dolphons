@@ -11,6 +11,7 @@ import android.widget.Button;
 //import android.widget.CheckBox;
 //import android.widget.EditText;
 //import android.widget.ImageButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
@@ -25,11 +26,12 @@ import com.google.firebase.auth.FirebaseUser;
 //import java.util.HashMap;
 //import java.util.Map;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 public class welcome extends AppCompatActivity {
 
 
-    private ImageView profilePicture;
+    private ImageButton profilePicture;
     private TextView userName;
     private TextView userEmail;
 
@@ -54,14 +56,15 @@ public class welcome extends AppCompatActivity {
                 String message = "Hello, " + name;
                 userName.setText(message);
             }
-            /* works but takes too long to load (huge file) */
-           // if(user.getPhotoUrl() != null){
-           //     Uri photoUrl = user.getPhotoUrl();
-           //     profilePicture.setImageURI(photoUrl);
-           //     System.out.println(photoUrl + "url");
-           // } else {
-           //     System.out.println("IT IS NULL");
-           // }
+
+            if(user.getPhotoUrl() != null){
+                //Uri photoUrl = user.getPhotoUrl();
+                //profilePicture.setImageURI(photoUrl); // works but takes too long to load (huge file)
+                Picasso.with(welcome.this).load(user.getPhotoUrl()).into(profilePicture);
+                System.out.println(user.getPhotoUrl() + "url blahbalhbalh");
+            } else {
+                System.out.println("User's Profile Picture IS NULL");
+            }
         }
         else{
             //User is not signed in, return to Login screen.

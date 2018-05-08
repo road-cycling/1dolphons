@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 public class createGroup extends AppCompatActivity
@@ -45,6 +46,9 @@ public class createGroup extends AppCompatActivity
     private ImageView imageView;
 
     private Uri imageUri;
+    private String name;
+    private String desc;
+    private boolean privateCheck;
     private StorageReference storageRef;
     private DatabaseReference databaseRef;
 
@@ -60,12 +64,12 @@ public class createGroup extends AppCompatActivity
 
         FireStore = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        groupName = (EditText) findViewById(R.id.groupNameTextEnter);
-        groupDesc = (EditText) findViewById(R.id.enterGroupDesc);
-        privateGroup = (CheckBox) findViewById(R.id.checkboxPrivate);
-        createGroup = (Button) findViewById(R.id.buttonCreateGroup);
-        chooseImage = (Button) findViewById(R.id.chooseImage);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        groupName = findViewById(R.id.groupNameTextEnter);
+        groupDesc = findViewById(R.id.enterGroupDesc);
+        privateGroup = findViewById(R.id.checkboxPrivate);
+        createGroup = findViewById(R.id.buttonCreateGroup);
+        chooseImage = findViewById(R.id.chooseImage);
+        imageView = findViewById(R.id.imageView);
 
         storageRef = FirebaseStorage.getInstance().getReference("uploads");
         databaseRef = FirebaseDatabase.getInstance().getReference("uploads");
@@ -83,15 +87,13 @@ public class createGroup extends AppCompatActivity
             public void onClick(View view)
             {
                 //What to do after create button is pressed
-                String name = groupName.getText().toString();
-                String desc = groupDesc.getText().toString();
+                name = groupName.getText().toString();
+                desc = groupDesc.getText().toString();
 
                 //Checkbox not done yet
-                boolean privateCheck = privateGroup.isChecked();
+                privateCheck = privateGroup.isChecked();
 
                 uploadFile();
-
-                addGroupToFireStore(name, desc, privateCheck);
 
             }
         });
@@ -103,13 +105,15 @@ public class createGroup extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void addGroupToFireStore(final String name, String desc, boolean privateCheck) {
+    private void addGroupToFireStore(final String name, String desc, boolean privateCheck, Uri imageUri) {
         Map<String, String> userMap = new HashMap<>();
         System.out.println(user.getUid());
         System.out.println(FireStore);
         userMap.put("groupName", name);
         userMap.put("groupDesc", desc);
         userMap.put("owner_uid", user.getUid());
+        userMap.put("photoURL", imageUri.toString());
+
 
         FireStore.collection("groupss").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -137,6 +141,7 @@ public class createGroup extends AppCompatActivity
         userMap.put("groupID", refID);
         userMap.put("groupName", groupName);
 
+
         FireStore
                 .collection("users")
                 .document(user.getUid())
@@ -161,6 +166,8 @@ public class createGroup extends AppCompatActivity
         userMap.put("deleteID", userRefID);
         userMap.put("owner", /*boolean :( */ "true"); //I think we need this
         userMap.put("admin", /*boolean :( */ "true");
+        userMap.put("user_name", user.getDisplayName());
+
         //we need to add name of user
 
         FireStore
@@ -196,7 +203,8 @@ public class createGroup extends AppCompatActivity
     {
         if (imageUri != null)
         {
-            StorageReference fileReference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+            //StorageReference fileReference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+            final StorageReference fileReference = storageRef.child(imageUri.toString());
 
             fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
@@ -204,10 +212,14 @@ public class createGroup extends AppCompatActivity
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                         {
-                            Toast.makeText(createGroup.this, "Group Succesfully Created", Toast.LENGTH_LONG).show();
+                            //imageUri = Uri.parse(fileReference.getDownloadUrl().toString());
+                            Toast.makeText(createGroup.this, "Group Successfully Created", Toast.LENGTH_LONG).show();
                             Upload upload = new Upload(taskSnapshot.getDownloadUrl().toString());
                             String uploadId = databaseRef.push().getKey();
+                            imageUri = taskSnapshot.getDownloadUrl();
                             databaseRef.child(uploadId).setValue(upload);
+
+                            addGroupToFireStore(name, desc, privateCheck, imageUri);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener()
@@ -242,6 +254,8 @@ public class createGroup extends AppCompatActivity
             imageUri = data.getData();
 
             Picasso.with(this).load(imageUri).into(imageView);
+            System.out.println("IMAGE URI: ");
+            System.out.println(imageUri);
             //imageView.setImageURI(imageUri);
         }
     }
@@ -358,98 +372,3 @@ public class createGroup extends AppCompatActivity
 //}
 
 
-/*
-  const { currentUser } = firebase.auth();
-  const { uid } = currentUser;
-  const lower_name = name.toLowerCase();
-  ///users/${currentUser.uid}/groups
-  return async dispatch => {
-    try {
-      //how data is structured
-      dispatch({ type: GROUP_CREATE_PRESS })
-      //const response = await firebase.database().ref(`/groups/${name}${uid}`)
-      const response = await firebase.database().ref(`/groups/`)
-        .push({
-           name,
-          organizer,
-          summary,
-          isPublic,
-          lower_name,
-          owner: uid,
-        })
-      const { key } = response
-      //console.log(key);
-      await firebase.database().ref('/users/${uid}').push({ key })
-      await firebase.database().ref('/events/${key}').push({
-        location: 'Group Created',
-        summary: 'Group Created',
-        chosenDate: new Date().toString()
-      })
-      dispatch({ type: GROUP_CREATE_SUCCESS })
-      return;
-    } catch (e) { console.log(e) }
-  }
-  //sign in
-    const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-//create user
-const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
-//add name to user profile so we can say "hello x"
-        await user.updateProfile({ displayName: name })
-export const newImage = (uri, mime = 'image/jpg') => {
-        //dispatch({  })
-        return dispatch => {
-        return new Promise((resolve, reject) => {
-        const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
-        const Blob = RNFetchBlob.polyfill.Blob
-        const fs = RNFetchBlob.fs
-        window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
-        window.Blob = Blob
-        let uploadBlob = null
-        const { currentUser } = firebase.auth();
-        const { uid } = currentUser;
-        const imageRef = firebase.storage().ref('/posts/${uid}')
-        fs.readFile(uploadUri, 'base64')
-        .then((data) => {
-        return Blob.build(data, { type: '${mime};BASE64' })
-        })
-        .then((blob) => {
-        uploadBlob = blob
-        return imageRef.put(blob, { contentType: mime })
-        })
-        .then(() => {
-        uploadBlob.close()
-        return imageRef.getDownloadURL()
-        })
-        .then((url) => {
-        currentUser.updateProfile({ photoURL : url })
-        console.log('done')
-        dispatch({
-        type: IMAGE_UPLOAD_WELCOME,
-        payload: url
-        })
-        })
-        .catch((error) => {
-        console.log(error)
-        console.log('thiscodesucks')
-        })
-        })
-        }
-        }
-        var { displayName, photoURL } =  firebase.auth().currentUser;
-        dispatch({
-        type: NAME_CHANGE_WELCOME,
-        payload: displayName
-        })
-        dispatch({
-        type: IMAGE_UPLOAD_WELCOME,
-        payload: photoURL
-        })
-        const response = await firebase.database().ref('/events/${this.state.data}')
-        .push({
-        location,
-        summary,
-        chosenDate: chosenDate.toString()
-        })
-        this.props.history.push('/getGroup/${this.state.data}')
-        group id//
-*/

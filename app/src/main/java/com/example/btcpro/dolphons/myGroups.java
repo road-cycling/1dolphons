@@ -39,8 +39,6 @@ public class myGroups extends AppCompatActivity {
 
         final ArrayList<String> arrayList = new ArrayList<String>();
         groupID = new ArrayList<String>();
-        System.out.print("USER:");
-        System.out.println(user.getUid());
         FireStore
                 .collection("users")
                 .document(user.getUid()) /* for testing would be users uid in real life */

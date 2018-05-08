@@ -1,6 +1,7 @@
 package com.example.btcpro.dolphons;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.view.View;
@@ -31,6 +33,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,16 +56,16 @@ public class viewGroup extends AppCompatActivity{
     TextView nameTitle;
     TextView groupDescript;
     TextView joinGroup;
-    TextView editGroup;
-    TextView createEvent;
+    TextView home;
+    Button admin_panel;
     ListView eventsListView;
     ArrayList<String> eventID;
+    ImageView image;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("BITCH IS CALLED");
         setContentView(R.layout.activity_view_group);
 
         intent = this.getIntent();
@@ -71,15 +74,14 @@ public class viewGroup extends AppCompatActivity{
         nameTitle = findViewById(R.id.nameTitle);
         groupDescript = findViewById(R.id.groupDescript);
         joinGroup = findViewById(R.id.joinGroup);
-        editGroup = findViewById(R.id.editGroup);
-        createEvent = findViewById(R.id.createEvent);
+        home = findViewById(R.id.home);
+        admin_panel = findViewById(R.id.admin);
         eventsListView = findViewById(R.id.eventListView);
+        image = findViewById(R.id.imgviewProfilePicture);
 
         final ArrayList<String> arrayList = new ArrayList<String>();
-        eventID = new ArrayList<String>();
+        eventID = new ArrayList<>();
 
-        editGroup.setVisibility(View.GONE);
-        createEvent.setVisibility(View.GONE);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -93,23 +95,36 @@ public class viewGroup extends AppCompatActivity{
                 }
                 nameTitle.setText(documentSnapshot.getData().get("groupName").toString());
                 groupDescript.setText(documentSnapshot.getData().get("groupDesc").toString());
+                if(documentSnapshot.getData().get("photoURL") != null){
+
+
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    Uri photoUrl = Uri.parse(documentSnapshot.getData().get("photoURL").toString());
+                    System.out.println("URL!!!!!!!!!!!!!!!!");
+                    System.out.println(photoUrl);
+                    intent.setType(photoUrl.toString());
+                    //image.setImageURI(Uri.parse(intent.toString()));
+                    Picasso.with(viewGroup.this).load(photoUrl).into(image);
+
+                } else {
+                    System.out.println("IT IS NULL");
+                }
             }
         });
 
-        editGroup.setOnClickListener(new View.OnClickListener() {
+        home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent().setClass(viewGroup.this, editGroup.class);
-                intent.putExtra("groupID", groupRefID);
+                Intent intent = new Intent().setClass(viewGroup.this, welcome.class);
 
                 startActivity(intent);
             }
         });
 
-        createEvent.setOnClickListener(new View.OnClickListener() {
+        admin_panel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent().setClass(viewGroup.this, admin_createEvent.class);
+                Intent intent = new Intent().setClass(viewGroup.this, adminPanel.class);
                 intent.putExtra("groupID", groupRefID);
 
                 startActivity(intent);
@@ -133,8 +148,7 @@ public class viewGroup extends AppCompatActivity{
                 }
 
                 if (admin) {
-                    editGroup.setVisibility(View.VISIBLE);
-                    createEvent.setVisibility(View.VISIBLE);
+                    admin_panel.setVisibility(View.VISIBLE);
                     joinGroup.setVisibility(View.GONE);
                 }
 
@@ -148,9 +162,6 @@ public class viewGroup extends AppCompatActivity{
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     List<DocumentSnapshot> data = queryDocumentSnapshots.getDocuments();
                     for (DocumentSnapshot item : data) {
-                        System.out.println("IM INSIDE");
-                        System.out.println(groupRefID);
-                        System.out.println(item.getId());
 
                         if (item.get("title") != null)
                             arrayList.add(item.get("title").toString());
@@ -195,8 +206,10 @@ public class viewGroup extends AppCompatActivity{
                 Intent intent = new Intent().setClass(viewGroup.this, viewEvent.class);
                 intent.putExtra("groupID", groupRefID);
                 intent.putExtra("eventID", eventID.get(i));
+                System.out.println("EVENT CLICKED!");
+                System.out.println(eventID.get(i));
                 startActivity(intent);
-                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
             }
         });
