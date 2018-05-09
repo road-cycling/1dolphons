@@ -146,7 +146,7 @@ public class editUserProfile extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                         {
                             //imageUri = Uri.parse(fileReference.getDownloadUrl().toString());
-                            Toast.makeText(editUserProfile.this, "Profile successfully updated", Toast.LENGTH_LONG).show();
+                            Toast.makeText(editUserProfile.this, "Profile Picture successfully updated.", Toast.LENGTH_LONG).show();
                             Upload upload = new Upload(taskSnapshot.getDownloadUrl().toString());
                             String uploadId = databaseRef.push().getKey();
 
@@ -159,7 +159,7 @@ public class editUserProfile extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                //Log.d(TAG, "user profile updated.");
+                                                //Log.d(TAG, "User profile picture updated.");
                                                 //writeUserData(name);
                                                 //updateUI(true);
                                             }
@@ -187,7 +187,7 @@ public class editUserProfile extends AppCompatActivity {
     }
 
     public void openWelcome(View v){
-        uploadFile();
+        //uploadFile();
         Intent intent = new Intent(this, welcome.class);
         startActivity(intent);
     }
@@ -245,7 +245,8 @@ public class editUserProfile extends AppCompatActivity {
             user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(editUserProfile.this, "Successfully changed picture!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(editUserProfile.this, "Successfully changed picture!", Toast.LENGTH_SHORT).show();
+                    uploadFile();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
