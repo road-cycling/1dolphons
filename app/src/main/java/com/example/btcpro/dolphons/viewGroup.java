@@ -151,13 +151,33 @@ public class viewGroup extends AppCompatActivity{
                             public void onSuccess(DocumentReference documentReference) {
                                 //it works!
 
-                                Toast.makeText(viewGroup.this, "Joined Group!", Toast.LENGTH_LONG).show();
+                                Map<String, String> userMap = new HashMap<>();
+                                userMap.put("groupID", groupRefID);
+                                userMap.put("groupName", nameTitle.getText().toString());
 
-                                Intent intent = new Intent().setClass(viewGroup.this, viewGroup.class);
-                                intent.putExtra("groupID", groupRefID);
 
-                                startActivity(intent);
-                                //addGroupEvent(userRefID, groupRefID);
+                                db
+                                        .collection("users")
+                                        .document(user.getUid())
+                                        .collection("groupsApartOf")
+                                        .add(userMap)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Toast.makeText(viewGroup.this, "Joined Group!", Toast.LENGTH_LONG).show();
+
+                                                Intent intent = new Intent().setClass(viewGroup.this, viewGroup.class);
+                                                intent.putExtra("groupID", groupRefID);
+
+                                                startActivity(intent);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        //failll
+                                    }
+                                });
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
