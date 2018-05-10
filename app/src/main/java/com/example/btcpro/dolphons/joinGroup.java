@@ -119,7 +119,7 @@ public class joinGroup extends AppCompatActivity {
                 Intent intent = new Intent().setClass(joinGroup.this, viewGroup.class);
                 intent.putExtra("groupID", groupID.get(i));
                 startActivity(intent);
-                
+
                 Log.i("Tapped: ", arrayList.toString());
                 Log.i("ID is: ", groupID.get(i)); //working perfectly for intents
                 Log.i("Tapped (?): ", Integer.toString(i));

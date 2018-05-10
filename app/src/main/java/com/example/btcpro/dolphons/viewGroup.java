@@ -32,6 +32,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
@@ -55,9 +56,9 @@ public class viewGroup extends AppCompatActivity{
 
     TextView nameTitle;
     TextView groupDescript;
-    TextView joinGroup;
     TextView home;
     Button admin_panel;
+    Button join;
     ListView eventsListView;
     ArrayList<String> eventID;
     ImageView image;
@@ -73,9 +74,9 @@ public class viewGroup extends AppCompatActivity{
 
         nameTitle = findViewById(R.id.nameTitle);
         groupDescript = findViewById(R.id.groupDescript);
-        joinGroup = findViewById(R.id.joinGroup);
         home = findViewById(R.id.home);
         admin_panel = findViewById(R.id.admin);
+        join = findViewById(R.id.joinGroup);
         eventsListView = findViewById(R.id.eventListView);
         image = findViewById(R.id.imgviewProfilePicture);
 
@@ -131,6 +132,44 @@ public class viewGroup extends AppCompatActivity{
             }
         });
 
+        join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String, String> userMap = new HashMap<>();
+                userMap.put("admin", "false");
+                userMap.put("userID", user.getUid());
+                userMap.put("user_name", user.getDisplayName());
+
+
+                db
+                        .collection("groupss")
+                        .document(groupRefID)
+                        .collection("users")
+                        .add(userMap)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                //it works!
+
+                                Toast.makeText(viewGroup.this, "Joined Group!", Toast.LENGTH_LONG).show();
+
+                                Intent intent = new Intent().setClass(viewGroup.this, viewGroup.class);
+                                intent.putExtra("groupID", groupRefID);
+
+                                startActivity(intent);
+                                //addGroupEvent(userRefID, groupRefID);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        /* shake? */
+                    }
+                });
+
+
+            }
+        });
+
 
         db.collection("groupss").document(groupRefID)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -149,11 +188,24 @@ public class viewGroup extends AppCompatActivity{
 
                 if (admin) {
                     admin_panel.setVisibility(View.VISIBLE);
-                    joinGroup.setVisibility(View.GONE);
+                    join.setVisibility(View.GONE);
                 }
 
             }
         });
+
+        db.collection("groupss").document(groupRefID).collection("users").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> data = queryDocumentSnapshots.getDocuments();
+                        for (DocumentSnapshot item : data) {
+                            if (user.getUid().equals((item.get("userID").toString())))
+                                join.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
 
 
         db.collection("groupss").document(groupRefID).collection("events").get()
@@ -167,22 +219,6 @@ public class viewGroup extends AppCompatActivity{
                             arrayList.add(item.get("title").toString());
                         else
                             arrayList.add("Placeholder");
-
-                        /*if (item.get("location") != null)
-                            arrayList.add(item.get("location").toString());
-                        else
-                            arrayList.add("Placeholder");
-
-                        if (item.get("summary") != null)
-                            arrayList.add(item.get("summary").toString());
-                        else
-                            arrayList.add("Placeholder");
-
-                        if (item.get("date") != null)
-                            arrayList.add(item.get("date").toString());
-                        else
-                            arrayList.add("Placeholder");
-*/
                         eventID.add(item.getId());
 
                     }
@@ -214,7 +250,4 @@ public class viewGroup extends AppCompatActivity{
             }
         });
     }
-
-
-
 }
