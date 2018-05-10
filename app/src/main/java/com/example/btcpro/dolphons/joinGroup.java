@@ -1,5 +1,6 @@
 package com.example.btcpro.dolphons;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -115,6 +116,10 @@ public class joinGroup extends AppCompatActivity {
         joinGroupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent().setClass(joinGroup.this, viewGroup.class);
+                intent.putExtra("groupID", groupID.get(i));
+                startActivity(intent);
+                
                 Log.i("Tapped: ", arrayList.toString());
                 Log.i("ID is: ", groupID.get(i)); //working perfectly for intents
                 Log.i("Tapped (?): ", Integer.toString(i));
